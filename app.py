@@ -15,7 +15,6 @@ app = Flask(__name__)
 CORS(app)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-FRONTEND_DIR = os.path.join(BASE_DIR, "frontend")
 
 
 # ============================================================
@@ -176,15 +175,15 @@ def calculate_mood_score(genres, mood):
             "fantasy"
         ],
 
-        "neutral": [
-            "drama",
-            "documentary"
-        ],
-
         "love": [
             "romance",
             "comedy",
             "drama"
+        ],
+
+        "neutral": [
+            "drama",
+            "documentary"
         ]
     }
 
@@ -223,6 +222,7 @@ def get_mood_movies(
 
     candidates = movies.copy()
 
+
     # --------------------------------------------------------
     # PERSONAL SCORE
     # --------------------------------------------------------
@@ -245,6 +245,7 @@ def get_mood_movies(
             candidates["personal_score"]
         )
     )
+
 
     # --------------------------------------------------------
     # RATING
@@ -279,6 +280,7 @@ def get_mood_movies(
                 how="left"
             )
 
+
     if "avg_rating" not in candidates.columns:
         candidates["avg_rating"] = 0.0
 
@@ -290,6 +292,7 @@ def get_mood_movies(
     candidates["rating_norm"] = (
         candidates["avg_rating"] / 5.0
     ).clip(0, 1)
+
 
     # --------------------------------------------------------
     # MOOD
@@ -303,6 +306,7 @@ def get_mood_movies(
             mood
         )
     )
+
 
     # --------------------------------------------------------
     # TIME
@@ -332,11 +336,13 @@ def get_mood_movies(
 
         return 0.7
 
+
     candidates["time_score"] = (
         candidates["genres"].apply(
             time_score
         )
     )
+
 
     # --------------------------------------------------------
     # WEATHER
@@ -363,11 +369,13 @@ def get_mood_movies(
 
         return 0.9
 
+
     candidates["weather_score"] = (
         candidates["genres"].apply(
             weather_score
         )
     )
+
 
     # --------------------------------------------------------
     # ENERGY
@@ -407,11 +415,13 @@ def get_mood_movies(
 
         return 0.8
 
+
     candidates["energy_score"] = (
         candidates["genres"].apply(
             energy_score
         )
     )
+
 
     # --------------------------------------------------------
     # CONTEXT SCORE
@@ -424,6 +434,7 @@ def get_mood_movies(
         + 0.15 * candidates["energy_score"]
     )
 
+
     # --------------------------------------------------------
     # FINAL SCORE
     # --------------------------------------------------------
@@ -435,9 +446,11 @@ def get_mood_movies(
         + 0.20 * candidates["context_score"]
     ).clip(0, 1)
 
+
     candidates["match_percent"] = (
         candidates["final_score"] * 100
     ).round(1)
+
 
     # --------------------------------------------------------
     # RESULT
@@ -489,6 +502,7 @@ def get_activities(
 
     activities = []
 
+
     if mood == "joy":
 
         activities.append({
@@ -497,6 +511,7 @@ def get_activities(
                 "Use the positive mood for movement.",
             "duration": 15
         })
+
 
     if weather == "rain":
 
@@ -507,6 +522,7 @@ def get_activities(
             "duration": 15
         })
 
+
     activities.append({
         "title": "Stretch session",
         "description":
@@ -514,18 +530,19 @@ def get_activities(
         "duration": 10
     })
 
+
     return activities[:3]
 
 
 # ============================================================
-# FRONTEND
+# FRONTEND ROUTES
 # ============================================================
 
 @app.route("/", methods=["GET"])
 def home():
 
     return send_from_directory(
-        FRONTEND_DIR,
+        BASE_DIR,
         "index.html"
     )
 
@@ -534,13 +551,13 @@ def home():
 def results():
 
     return send_from_directory(
-        FRONTEND_DIR,
+        BASE_DIR,
         "results.html"
     )
 
 
 # ============================================================
-# API
+# MOODMATE API
 # ============================================================
 
 @app.route("/api/moodmate", methods=["POST"])
@@ -549,6 +566,11 @@ def moodmate_api():
     data = request.get_json(
         silent=True
     ) or {}
+
+
+    # --------------------------------------------------------
+    # INPUTS
+    # --------------------------------------------------------
 
     try:
 
@@ -573,6 +595,7 @@ def moodmate_api():
                 "user_id and hour must be integers"
         }), 400
 
+
     mood = data.get(
         "mood",
         "joy"
@@ -588,6 +611,11 @@ def moodmate_api():
         "medium"
     )
 
+
+    # --------------------------------------------------------
+    # GENERATE MOVIES
+    # --------------------------------------------------------
+
     movies_result = get_mood_movies(
         user_id=user_id,
         mood=mood,
@@ -597,26 +625,43 @@ def moodmate_api():
         n=5
     )
 
+
+    # --------------------------------------------------------
+    # GENERATE ACTIVITIES
+    # --------------------------------------------------------
+
     activities = get_activities(
         mood,
         weather,
         energy
     )
 
+
+    # --------------------------------------------------------
+    # RESPONSE
+    # --------------------------------------------------------
+
     return jsonify({
 
         "context": {
+
             "mood": mood,
+
             "hour": hour,
+
             "weather": weather,
+
             "energy": energy
+
         },
 
-        "movies": movies_result.to_dict(
-            orient="records"
-        ),
+        "movies":
+            movies_result.to_dict(
+                orient="records"
+            ),
 
-        "activities": activities
+        "activities":
+            activities
 
     })
 
