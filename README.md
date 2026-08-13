@@ -1,4 +1,4 @@
-# 🎬 MoodM***ate AI — Project Summary
+# 🎬 MoodMate AI — Project Summary
 
 MoodMate AI is an **AI-powered, context-aware recommendation system** designed to help users decide what to watch or what to do based on their current **mood, time, weather, and energy level**.
 
@@ -39,11 +39,11 @@ Movie Preferences
 ↓  
 Movie Recommendation  
 
-MoodMate adds the user's current context:
+## **MoodMate adds the user's current context: **
 
 
-#**CURRENT CONTEXT**
-      │
+            CURRENT CONTEXT
+
       ├──────────────┬──────────────┐
       │              │              │
      Mood           Time         Weather
