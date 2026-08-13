@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,10 +38,13 @@ body{
     inset:0;
     background:#f47b20;
     z-index:9999;
+
     display:flex;
     align-items:center;
     justify-content:center;
-    transition:opacity 1s ease, visibility 1s ease;
+
+    transition:opacity 1s ease,
+               visibility 1s ease;
 }
 
 .loader.hide{
@@ -70,8 +72,15 @@ body{
 }
 
 @keyframes pulse{
-    0%,100%{transform:scale(1)}
-    50%{transform:scale(1.05)}
+
+    0%,100%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.05);
+    }
+
 }
 
 /* =========================
@@ -82,6 +91,7 @@ nav{
     position:absolute;
     top:0;
     left:0;
+
     width:100%;
     z-index:20;
 
@@ -94,7 +104,9 @@ nav{
 
 .logo{
     color:white;
+
     font-family:"Playfair Display",serif;
+
     font-size:28px;
     font-weight:700;
 }
@@ -111,8 +123,10 @@ nav{
 .nav-links a{
     color:white;
     text-decoration:none;
+
     font-size:14px;
     opacity:.9;
+
     transition:.3s;
 }
 
@@ -125,7 +139,9 @@ nav{
 ========================= */
 
 .hero{
+
     min-height:100vh;
+
     position:relative;
 
     display:flex;
@@ -134,12 +150,14 @@ nav{
     overflow:hidden;
 
     background:
+
         linear-gradient(
             90deg,
-            rgba(15,10,7,.90) 0%,
+            rgba(15,10,7,.92) 0%,
             rgba(15,10,7,.68) 45%,
             rgba(15,10,7,.25) 100%
         ),
+
         url("https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=2000&q=90");
 
     background-size:cover;
@@ -147,20 +165,34 @@ nav{
 }
 
 .hero::after{
+
     content:"";
+
     position:absolute;
     inset:0;
 
     background:
-        radial-gradient(circle at 80% 30%,rgba(244,123,32,.35),transparent 30%),
-        linear-gradient(to bottom,transparent 70%,#fffaf5 100%);
+
+        radial-gradient(
+            circle at 80% 30%,
+            rgba(244,123,32,.35),
+            transparent 30%
+        ),
+
+        linear-gradient(
+            to bottom,
+            transparent 70%,
+            #fffaf5 100%
+        );
 }
 
 .hero-content{
+
     position:relative;
     z-index:5;
 
     max-width:760px;
+
     margin-left:8%;
     margin-top:40px;
 
@@ -168,30 +200,44 @@ nav{
 }
 
 @keyframes heroIn{
+
     from{
         opacity:0;
         transform:translateY(40px);
     }
+
     to{
         opacity:1;
         transform:translateY(0);
     }
+
 }
 
 .eyebrow{
+
     color:#ff9a4a;
+
     text-transform:uppercase;
+
     letter-spacing:5px;
+
     font-size:13px;
+
     font-weight:700;
+
     margin-bottom:22px;
 }
 
 .hero h1{
+
     color:white;
+
     font-family:"Playfair Display",serif;
+
     font-size:clamp(55px,7vw,105px);
+
     line-height:.92;
+
     letter-spacing:-5px;
 }
 
@@ -200,52 +246,79 @@ nav{
 }
 
 .hero p{
+
     color:#eee;
+
     font-size:18px;
+
     line-height:1.7;
+
     max-width:580px;
+
     margin-top:30px;
 }
 
 .hero-button{
+
     display:inline-flex;
+
     align-items:center;
+
     gap:12px;
 
     margin-top:38px;
+
     padding:17px 30px;
 
     background:#f47b20;
+
     color:white;
 
     border-radius:50px;
+
     text-decoration:none;
+
     font-weight:700;
 
-    box-shadow:0 15px 40px rgba(244,123,32,.35);
+    box-shadow:
+        0 15px 40px
+        rgba(244,123,32,.35);
 
     transition:.35s;
 }
 
 .hero-button:hover{
+
     transform:translateY(-4px);
+
     background:#ff8a36;
-    box-shadow:0 20px 50px rgba(244,123,32,.5);
+
+    box-shadow:
+        0 20px 50px
+        rgba(244,123,32,.5);
 }
 
 /* =========================
-   FLOATING OBJECTS
+   FLOATING POPCORN
 ========================= */
 
 .floating{
+
     position:absolute;
+
     z-index:4;
+
     pointer-events:none;
 
-    filter:drop-shadow(0 20px 30px rgba(0,0,0,.3));
+    filter:
+        drop-shadow(
+            0 20px 30px
+            rgba(0,0,0,.3)
+        );
 }
 
 .popcorn{
+
     right:9%;
     top:22%;
 
@@ -253,10 +326,30 @@ nav{
     height:220px;
 
     background:
-        linear-gradient(90deg,#fff 8%,transparent 8%,transparent 25%,#fff 25%,#fff 35%,transparent 35%,transparent 52%,#fff 52%,#fff 62%,transparent 62%,transparent 80%,#fff 80%),
+
+        linear-gradient(
+            90deg,
+            #fff 8%,
+            transparent 8%,
+            transparent 25%,
+            #fff 25%,
+            #fff 35%,
+            transparent 35%,
+            transparent 52%,
+            #fff 52%,
+            #fff 62%,
+            transparent 62%,
+            transparent 80%,
+            #fff 80%
+        ),
+
         #e64c1c;
 
-    border-radius:15px 15px 45px 45px;
+    border-radius:
+        15px
+        15px
+        45px
+        45px;
 
     transform:rotate(8deg);
 
@@ -264,247 +357,378 @@ nav{
 }
 
 .popcorn::before{
+
     content:"🍿";
+
     position:absolute;
+
     font-size:95px;
+
     left:40px;
     top:-75px;
 }
 
 @keyframes float{
+
     0%,100%{
-        transform:translateY(0) rotate(8deg);
+        transform:
+            translateY(0)
+            rotate(8deg);
     }
+
     50%{
-        transform:translateY(-25px) rotate(5deg);
+        transform:
+            translateY(-25px)
+            rotate(5deg);
     }
+
 }
 
 /* =========================
-   MOOD SECTION
+   INTRO SECTION
 ========================= */
 
-.selector-section{
-    position:relative;
+.intro{
+
     padding:120px 8%;
+
     background:#fffaf5;
+
+    text-align:center;
 }
 
-.section-label{
+.intro-label{
+
     color:#f47b20;
+
     text-transform:uppercase;
+
     letter-spacing:4px;
+
     font-size:12px;
+
     font-weight:700;
 }
 
-.section-title{
+.intro h2{
+
     font-family:"Playfair Display",serif;
-    font-size:clamp(40px,5vw,68px);
+
+    font-size:
+        clamp(
+            42px,
+            5vw,
+            68px
+        );
+
     line-height:1;
+
     margin-top:15px;
 }
 
-.section-description{
-    max-width:600px;
+.intro p{
+
+    max-width:650px;
+
+    margin:
+        25px auto 0;
+
     color:#71655e;
-    margin-top:20px;
-    line-height:1.7;
+
+    line-height:1.8;
+
+    font-size:16px;
 }
 
 /* =========================
-   CARDS
+   4 FEATURE CARDS
 ========================= */
 
-.selector-grid{
+.features{
+
+    padding:
+        0 8%
+        120px;
+
+    background:#fffaf5;
+
     display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:18px;
-    margin-top:55px;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:20px;
 }
 
-.selector-card{
-    background:white;
-    border:1px solid #eee3db;
-    border-radius:24px;
-    padding:25px;
+.feature{
 
-    cursor:pointer;
+    background:white;
+
+    border:
+        1px solid
+        #eee3db;
+
+    border-radius:26px;
+
+    padding:30px;
+
+    min-height:220px;
 
     transition:.35s;
 
     position:relative;
+
     overflow:hidden;
 }
 
-.selector-card::after{
-    content:"";
-    position:absolute;
-    width:100px;
-    height:100px;
+.feature::after{
 
-    right:-40px;
-    bottom:-40px;
+    content:"";
+
+    position:absolute;
+
+    width:120px;
+    height:120px;
+
+    right:-50px;
+    bottom:-50px;
 
     background:#f47b20;
-    opacity:.08;
+
+    opacity:.07;
 
     border-radius:50%;
 }
 
-.selector-card:hover{
+.feature:hover{
+
     transform:translateY(-8px);
+
     border-color:#f47b20;
-    box-shadow:0 20px 50px rgba(70,40,20,.10);
+
+    box-shadow:
+        0 20px 50px
+        rgba(70,40,20,.10);
 }
 
-.selector-card.active{
-    background:#f47b20;
-    color:white;
-    border-color:#f47b20;
+.feature-icon{
+
+    font-size:38px;
+
+    margin-bottom:22px;
 }
 
-.card-icon{
-    font-size:34px;
-    margin-bottom:20px;
+.feature h3{
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size:26px;
 }
 
-.card-title{
-    font-weight:700;
-    font-size:18px;
-}
+.feature p{
 
-.card-description{
+    color:#766960;
+
     font-size:13px;
-    color:#8a7b72;
-    margin-top:8px;
-    line-height:1.5;
-}
 
-.active .card-description{
-    color:#fff1e7;
+    line-height:1.6;
+
+    margin-top:10px;
 }
 
 /* =========================
-   DROPDOWNS
+   FIVE STEP FLOW
 ========================= */
 
-.controls{
-    margin-top:70px;
+.flow{
+
+    padding:120px 8%;
 
     background:#211713;
-    border-radius:32px;
-
-    padding:45px;
 
     color:white;
-
-    box-shadow:0 30px 80px rgba(40,20,10,.18);
 }
 
-.controls-title{
-    font-family:"Playfair Display",serif;
-    font-size:32px;
-}
+.flow-label{
 
-.controls-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:20px;
-    margin-top:30px;
-}
+    color:#ff9a4a;
 
-.control label{
-    display:block;
-    color:#b9aaa1;
-    font-size:12px;
     text-transform:uppercase;
-    letter-spacing:2px;
-    margin-bottom:9px;
-}
 
-select{
-    width:100%;
-    padding:15px;
+    letter-spacing:4px;
 
-    border:none;
-    outline:none;
-
-    border-radius:12px;
-
-    background:#382923;
-    color:white;
-
-    font-family:inherit;
-    font-size:14px;
-
-    cursor:pointer;
-}
-
-.generate{
-    margin-top:30px;
-
-    width:100%;
-    padding:17px;
-
-    border:none;
-    border-radius:14px;
-
-    background:#f47b20;
-    color:white;
+    font-size:12px;
 
     font-weight:700;
-    font-size:15px;
+}
 
-    cursor:pointer;
+.flow h2{
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size:
+        clamp(
+            42px,
+            5vw,
+            68px
+        );
+
+    line-height:1;
+
+    margin-top:15px;
+}
+
+.flow-grid{
+
+    margin-top:60px;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(5,1fr);
+
+    gap:18px;
+}
+
+.flow-card{
+
+    padding:28px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    border-radius:22px;
+
+    background:
+        rgba(255,255,255,.04);
 
     transition:.3s;
 }
 
-.generate:hover{
-    background:#ff9348;
-    transform:translateY(-2px);
+.flow-card:hover{
+
+    transform:translateY(-7px);
+
+    background:
+        rgba(244,123,32,.15);
+
+    border-color:#f47b20;
+}
+
+.flow-number{
+
+    color:#ff9a4a;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    letter-spacing:2px;
+}
+
+.flow-card h3{
+
+    margin-top:20px;
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size:23px;
+}
+
+.flow-card p{
+
+    color:#bcaea6;
+
+    font-size:13px;
+
+    line-height:1.6;
+
+    margin-top:10px;
 }
 
 /* =========================
-   EXPERIENCE
+   CTA
 ========================= */
 
-.experience{
-    min-height:600px;
+.cta{
+
     padding:120px 8%;
 
-    background:
-        linear-gradient(
-            rgba(244,123,32,.88),
-            rgba(225,91,17,.94)
-        ),
-        url("https://images.unsplash.com/photo-1518609878373-06d740f60d8b?auto=format&fit=crop&w=1800&q=85");
+    text-align:center;
 
-    background-size:cover;
-    background-position:center;
+    background:
+
+        linear-gradient(
+            120deg,
+            #f47b20,
+            #d95813
+        );
 
     color:white;
-
-    display:flex;
-    align-items:center;
 }
 
-.experience-inner{
-    max-width:750px;
-}
+.cta h2{
 
-.experience h2{
-    font-family:"Playfair Display",serif;
-    font-size:clamp(45px,6vw,80px);
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size:
+        clamp(
+            45px,
+            6vw,
+            80px
+        );
+
     line-height:.95;
 }
 
-.experience p{
-    margin-top:25px;
+.cta p{
+
+    max-width:600px;
+
+    margin:
+        25px auto 0;
+
     line-height:1.7;
-    font-size:18px;
-    color:#fff2e9;
+
+    color:#fff1e7;
+}
+
+.cta-button{
+
+    display:inline-block;
+
+    margin-top:32px;
+
+    padding:
+        16px 32px;
+
+    background:white;
+
+    color:#df6418;
+
+    border-radius:40px;
+
+    text-decoration:none;
+
+    font-weight:700;
+
+    transition:.3s;
+}
+
+.cta-button:hover{
+
+    transform:
+        translateY(-4px)
+        scale(1.03);
 }
 
 /* =========================
@@ -512,11 +736,16 @@ select{
 ========================= */
 
 footer{
-    padding:45px 8%;
+
+    padding:
+        45px 8%;
+
     background:#18110e;
+
     color:#998d86;
 
     display:flex;
+
     justify-content:space-between;
 }
 
@@ -528,18 +757,24 @@ footer strong{
    RESPONSIVE
 ========================= */
 
-@media(max-width:900px){
+@media(max-width:1000px){
 
-    .selector-grid{
-        grid-template-columns:repeat(2,1fr);
+    .features{
+
+        grid-template-columns:
+            repeat(2,1fr);
     }
 
-    .controls-grid{
-        grid-template-columns:repeat(2,1fr);
+    .flow-grid{
+
+        grid-template-columns:
+            repeat(2,1fr);
     }
 
     .popcorn{
+
         opacity:.35;
+
         right:-30px;
     }
 }
@@ -551,25 +786,40 @@ footer strong{
     }
 
     .hero-content{
+
         margin-left:7%;
         margin-right:7%;
     }
 
     .hero h1{
+
         letter-spacing:-3px;
     }
 
-    .selector-grid,
-    .controls-grid{
+    .features{
+
+        grid-template-columns:1fr;
+
+        padding:
+            0 7%
+            80px;
+    }
+
+    .flow{
+
+        padding:
+            80px 7%;
+    }
+
+    .flow-grid{
+
         grid-template-columns:1fr;
     }
 
-    .controls{
-        padding:28px;
-    }
-
     footer{
+
         flex-direction:column;
+
         gap:15px;
     }
 }
@@ -579,16 +829,30 @@ footer strong{
 
 <body>
 
-<!-- LOADER -->
+<!-- =========================
+     LOADER
+========================= -->
 
 <div class="loader" id="loader">
+
     <div class="loader-content">
-        <div class="loader-logo">MoodMate</div>
-        <div class="loader-text">Break the Scroll</div>
+
+        <div class="loader-logo">
+            MoodMate
+        </div>
+
+        <div class="loader-text">
+            Break the Scroll
+        </div>
+
     </div>
+
 </div>
 
-<!-- NAV -->
+
+<!-- =========================
+     NAVBAR
+========================= -->
 
 <nav>
 
@@ -597,13 +861,27 @@ footer strong{
     </div>
 
     <div class="nav-links">
-        <a href="#discover">Discover</a>
-        <a href="#experience">Experience</a>
+
+        <a href="#how">
+            How it works
+        </a>
+
+        <a href="#experience">
+            Experience
+        </a>
+
+        <a href="discover.html">
+            Discover
+        </a>
+
     </div>
 
 </nav>
 
-<!-- HERO -->
+
+<!-- =========================
+     HERO
+========================= -->
 
 <section class="hero">
 
@@ -614,192 +892,145 @@ footer strong{
         </div>
 
         <h1>
+
             Don't just<br>
+
             <span>scroll.</span><br>
+
             Feel.
+
         </h1>
 
         <p>
-            MoodMate understands your mood, your time,
-            your surroundings and your energy — then turns
-            that moment into something worth doing.
+
+            MoodMate understands your mood,
+            your time, your surroundings and
+            your energy — then turns that moment
+            into something worth doing.
+
         </p>
 
-        <a href="#discover" class="hero-button">
+        <a
+            href="discover.html"
+            class="hero-button"
+        >
+
             Create my moment
+
             <span>→</span>
+
         </a>
 
     </div>
+
 
     <div class="floating popcorn"></div>
 
 </section>
 
 
-<!-- DISCOVER -->
+<!-- =========================
+     INTRO
+========================= -->
 
-<section class="selector-section" id="discover">
+<section class="intro" id="experience">
 
-    <div class="section-label">
-        Step into your moment
+    <div class="intro-label">
+        More than a recommendation engine
     </div>
 
-    <h2 class="section-title">
-        Tell us how<br>you're feeling.
+    <h2>
+        Your moment deserves<br>
+        more than another scroll.
     </h2>
 
-    <p class="section-description">
-        No typing. No complicated forms.
-        Just choose what feels right and MoodMate
-        will create a personalized experience for you.
+    <p>
+
+        MoodMate combines artificial intelligence,
+        mood understanding, personal preferences
+        and everyday context to help you decide
+        what to watch, what to do and how to spend
+        the next few minutes.
+
     </p>
-
-
-    <div class="selector-grid">
-
-        <div class="selector-card active">
-            <div class="card-icon">😊</div>
-            <div class="card-title">Mood</div>
-            <div class="card-description">
-                Tell MoodMate what you're feeling.
-            </div>
-        </div>
-
-        <div class="selector-card">
-            <div class="card-icon">🌙</div>
-            <div class="card-title">Time</div>
-            <div class="card-description">
-                Your recommendations change with your moment.
-            </div>
-        </div>
-
-        <div class="selector-card">
-            <div class="card-icon">🌧️</div>
-            <div class="card-title">Weather</div>
-            <div class="card-description">
-                Rainy evening? Sunny afternoon? We adapt.
-            </div>
-        </div>
-
-        <div class="selector-card">
-            <div class="card-icon">⚡</div>
-            <div class="card-title">Energy</div>
-            <div class="card-description">
-                Choose how much energy you have right now.
-            </div>
-        </div>
-
-    </div>
-
-
-    <!-- DROPDOWNS -->
-
-    <div class="controls">
-
-        <div class="controls-title">
-            Build your moment
-        </div>
-
-        <div class="controls-grid">
-
-            <div class="control">
-
-                <label>Mood</label>
-
-                <select id="mood">
-
-                    <option value="joy">😊 Joy</option>
-                    <option value="sadness">😔 Sadness</option>
-                    <option value="anger">😤 Anger</option>
-                    <option value="fear">😨 Fear</option>
-                    <option value="love">❤️ Love</option>
-                    <option value="surprise">😮 Surprise</option>
-
-                </select>
-
-            </div>
-
-
-            <div class="control">
-
-                <label>Time</label>
-
-                <select id="time">
-
-                    <option value="morning">🌅 Morning</option>
-                    <option value="afternoon">☀️ Afternoon</option>
-                    <option value="evening" selected>🌆 Evening</option>
-                    <option value="night">🌙 Night</option>
-
-                </select>
-
-            </div>
-
-
-            <div class="control">
-
-                <label>Weather</label>
-
-                <select id="weather">
-
-                    <option value="sunny">☀️ Sunny</option>
-                    <option value="cloudy">☁️ Cloudy</option>
-                    <option value="rain" selected>🌧️ Rain</option>
-                    <option value="snow">❄️ Snow</option>
-
-                </select>
-
-            </div>
-
-
-            <div class="control">
-
-                <label>Energy</label>
-
-                <select id="energy">
-
-                    <option value="low">🔋 Low</option>
-                    <option value="medium" selected>⚡ Medium</option>
-                    <option value="high">🔥 High</option>
-
-                </select>
-
-            </div>
-
-        </div>
-
-
-        <button class="generate" onclick="createMoment()">
-            ✨ Create My MoodMate Moment
-        </button>
-
-    </div>
 
 </section>
 
 
-<!-- EXPERIENCE -->
+<!-- =========================
+     FEATURES
+========================= -->
 
-<section class="experience" id="experience">
+<section class="features">
 
-    <div class="experience-inner">
+    <div class="feature">
 
-        <div class="section-label" style="color:white">
-            Beyond recommendations
+        <div class="feature-icon">
+            🧠
         </div>
 
-        <h2>
-            Your next moment
-            should feel better
-            than another scroll.
-        </h2>
+        <h3>
+            Understand
+        </h3>
 
         <p>
-            Movies when you want to watch.
-            Movement when you need a break.
-            Activities when you want to do something.
-            MoodMate brings everything together.
+            MoodMate interprets your emotional
+            state and combines it with your
+            current context.
+        </p>
+
+    </div>
+
+
+    <div class="feature">
+
+        <div class="feature-icon">
+            🌤️
+        </div>
+
+        <h3>
+            Adapt
+        </h3>
+
+        <p>
+            Time, weather and energy influence
+            what makes sense for your moment.
+        </p>
+
+    </div>
+
+
+    <div class="feature">
+
+        <div class="feature-icon">
+            🎬
+        </div>
+
+        <h3>
+            Recommend
+        </h3>
+
+        <p>
+            Discover movies and activities
+            selected specifically for you.
+        </p>
+
+    </div>
+
+
+    <div class="feature">
+
+        <div class="feature-icon">
+            ✍️
+        </div>
+
+        <h3>
+            Reflect
+        </h3>
+
+        <p>
+            Capture how the moment felt and
+            build your personal mood journey.
         </p>
 
     </div>
@@ -807,12 +1038,157 @@ footer strong{
 </section>
 
 
-<!-- FOOTER -->
+<!-- =========================
+     HOW IT WORKS
+========================= -->
+
+<section class="flow" id="how">
+
+    <div class="flow-label">
+        The MoodMate journey
+    </div>
+
+    <h2>
+        Five steps.<br>
+        One better moment.
+    </h2>
+
+
+    <div class="flow-grid">
+
+        <div class="flow-card">
+
+            <div class="flow-number">
+                01
+            </div>
+
+            <h3>
+                Home
+            </h3>
+
+            <p>
+                Start with one simple idea:
+                don't just scroll — feel.
+            </p>
+
+        </div>
+
+
+        <div class="flow-card">
+
+            <div class="flow-number">
+                02
+            </div>
+
+            <h3>
+                Discover
+            </h3>
+
+            <p>
+                Choose your mood, time,
+                weather and energy.
+            </p>
+
+        </div>
+
+
+        <div class="flow-card">
+
+            <div class="flow-number">
+                03
+            </div>
+
+            <h3>
+                Your Moment
+            </h3>
+
+            <p>
+                AI interprets the context
+                behind your current moment.
+            </p>
+
+        </div>
+
+
+        <div class="flow-card">
+
+            <div class="flow-number">
+                04
+            </div>
+
+            <h3>
+                Recommendations
+            </h3>
+
+            <p>
+                Get personalized movies
+                and activities.
+            </p>
+
+        </div>
+
+
+        <div class="flow-card">
+
+            <div class="flow-number">
+                05
+            </div>
+
+            <h3>
+                Reflection
+            </h3>
+
+            <p>
+                Save the moment and reflect
+                on how you felt.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     CTA
+========================= -->
+
+<section class="cta">
+
+    <h2>
+        Ready to break<br>
+        the scroll?
+    </h2>
+
+    <p>
+
+        Tell MoodMate how you're feeling.
+        We'll take care of the rest.
+
+    </p>
+
+    <a
+        href="discover.html"
+        class="cta-button"
+    >
+
+        Enter MoodMate →
+
+    </a>
+
+</section>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
 
 <footer>
 
     <div>
-        <strong>MoodMate</strong> — Break the Scroll
+        <strong>MoodMate</strong>
+        — Break the Scroll
     </div>
 
     <div>
@@ -824,7 +1200,9 @@ footer strong{
 
 <script>
 
-/* LOADER */
+/* =========================
+   LOADER
+========================= */
 
 window.addEventListener("load", () => {
 
@@ -837,129 +1215,6 @@ window.addEventListener("load", () => {
     },1200);
 
 });
-
-
-/* CARD INTERACTION */
-
-document
-.querySelectorAll(".selector-card")
-.forEach(card => {
-
-    card.addEventListener("click", () => {
-
-        document
-        .querySelectorAll(".selector-card")
-        .forEach(c => c.classList.remove("active"));
-
-        card.classList.add("active");
-
-    });
-
-});
-
-
-/* CREATE MOMENT */
-
-async function createMoment(){
-
-    const mood =
-        document.getElementById("mood").value;
-
-    const time =
-        document.getElementById("time").value;
-
-    const weather =
-        document.getElementById("weather").value;
-
-    const energy =
-        document.getElementById("energy").value;
-
-
-    const button =
-        document.querySelector(".generate");
-
-    button.innerHTML = "✨ Creating your moment...";
-
-    button.disabled = true;
-
-
-    /*
-       BACKEND CONNECTION
-
-       When deployed on Render, change this to:
-
-       const API_URL =
-       "https://YOUR-BACKEND.onrender.com/api/moodmate";
-    */
-
-    const API_URL =
-        "/api/moodmate";
-
-
-    try{
-
-        const response =
-            await fetch(API_URL,{
-
-                method:"POST",
-
-                headers:{
-                    "Content-Type":"application/json"
-                },
-
-                body:JSON.stringify({
-
-                    user_id:1,
-                    mood:mood,
-                    hour:new Date().getHours(),
-                    weather:weather,
-                    energy:energy,
-                    time_of_day:time
-
-                })
-
-            });
-
-
-        const data =
-            await response.json();
-
-
-        console.log("MoodMate response:",data);
-
-
-        /*
-           TEMPORARY:
-           Later this will navigate to
-           the cinematic results page.
-        */
-
-        localStorage.setItem(
-            "moodmate_result",
-            JSON.stringify(data)
-        );
-
-
-        window.location.href =
-            "results.html";
-
-
-    }catch(error){
-
-        console.error(error);
-
-        alert(
-            "MoodMate couldn't connect to the AI backend yet."
-        );
-
-        button.innerHTML =
-            "✨ Create My MoodMate Moment";
-
-        button.disabled = false;
-
-    }
-
-}
 
 </script>
 
