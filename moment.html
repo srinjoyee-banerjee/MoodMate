@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width,initial-scale=1.0">
+
+<title>MoodMate — Your Moment</title>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap"
+      rel="stylesheet">
+
+<link rel="stylesheet"
+      href="style.css">
+
+</head>
+
+<body>
+
+
+<nav class="nav">
+
+<a class="logo"
+   href="index.html">
+
+Mood<span>Mate</span>
+
+</a>
+
+<div class="navlinks">
+
+<a href="index.html">Home</a>
+
+<a href="discover.html">Discover</a>
+
+<a href="moment.html">Your Moment</a>
+
+<a href="recommendations.html">
+Recommendations
+</a>
+
+<a href="journal.html">Journal</a>
+
+</div>
+
+</nav>
+
+
+<section class="section page">
+
+<div class="container">
+
+
+<div class="center">
+
+<div class="kicker">
+Step 2 · Your Moment
+</div>
+
+<h1 class="title">
+
+Understand<br>
+your moment.
+
+</h1>
+
+<p class="subtitle">
+
+MoodMate turns your selected
+context into an explanation of
+what might fit right now.
+
+</p>
+
+</div>
+
+
+<div class="moment-box">
+
+<div class="pills"
+     id="pills">
+</div>
+
+
+<h2 id="headline">
+Reading your moment...
+</h2>
+
+
+<p id="explanation">
+
+MoodMate is connecting your
+mood, time, weather and energy.
+
+</p>
+
+
+<a
+href="recommendations.html"
+class="btn">
+
+Show my recommendations →
+
+</a>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<footer class="footer">
+
+<div>
+<strong>MoodMate</strong>
+— Break the Scroll
+</div>
+
+<div>
+AI-powered mood experiences
+</div>
+
+</footer>
+
+
+<script>
+
+const data =
+JSON.parse(
+localStorage.getItem(
+"moodmate_result"
+) || "null"
+);
+
+
+const context =
+JSON.parse(
+localStorage.getItem(
+"moodmate_context"
+) || "null"
+);
+
+
+if(data){
+
+const c =
+data.context ||
+context ||
+{};
+
+
+document.getElementById(
+"pills"
+).innerHTML = `
+
+<span class="pill">
+😊 ${c.mood || "joy"}
+</span>
+
+<span class="pill">
+🕐 ${c.time_of_day || "evening"}
+</span>
+
+<span class="pill">
+🌤️ ${c.weather || "rain"}
+</span>
+
+<span class="pill">
+⚡ ${c.energy || "medium"}
+</span>
+
+`;
+
+
+document.getElementById(
+"headline"
+).textContent =
+
+data.moment?.headline ||
+"A moment shaped around you.";
+
+
+document.getElementById(
+"explanation"
+).textContent =
+
+data.moment?.explanation ||
+"Your context has been combined into a personalized experience.";
+
+}
+
+else{
+
+document.getElementById(
+"headline"
+).textContent =
+"Your moment is waiting.";
+
+document.getElementById(
+"explanation"
+).textContent =
+"Go to Discover and create a moment first.";
+
+}
+
+</script>
+
+</body>
+</html>
