@@ -3,19 +3,19 @@ import joblib
 import numpy as np
 import pandas as pd
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 
+
+# ============================================================
+# FLASK APP
+# ============================================================
 
 app = Flask(__name__)
 CORS(app)
 
-
-# ============================================================
-# PATHS
-# ============================================================
-
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+FRONTEND_DIR = os.path.join(BASE_DIR, "frontend")
 
 
 # ============================================================
@@ -104,9 +104,9 @@ def get_personal_scores(user_id):
     genre_values = movie_genre_matrix.copy()
 
     common_genres = [
-        genre
-        for genre in user_vector.index
-        if genre in genre_values.columns
+        g
+        for g in user_vector.index
+        if g in genre_values.columns
     ]
 
     if not common_genres:
@@ -179,6 +179,12 @@ def calculate_mood_score(genres, mood):
         "neutral": [
             "drama",
             "documentary"
+        ],
+
+        "love": [
+            "romance",
+            "comedy",
+            "drama"
         ]
     }
 
@@ -203,64 +209,6 @@ def calculate_mood_score(genres, mood):
 
 
 # ============================================================
-# CONTEXT SCORE
-# ============================================================
-
-def calculate_context_score(
-    genres,
-    hour,
-    weather,
-    energy
-):
-
-    genres = str(genres).lower()
-    weather = str(weather).lower()
-    energy = str(energy).lower()
-
-    score = 0.5
-
-    if 17 <= hour <= 22:
-
-        if any(
-            genre in genres
-            for genre in [
-                "comedy",
-                "romance",
-                "drama",
-                "animation"
-            ]
-        ):
-            score += 0.20
-
-    if weather == "rain":
-
-        if any(
-            genre in genres
-            for genre in [
-                "comedy",
-                "romance",
-                "animation",
-                "drama"
-            ]
-        ):
-            score += 0.20
-
-    if energy == "medium":
-
-        if any(
-            genre in genres
-            for genre in [
-                "comedy",
-                "adventure",
-                "animation"
-            ]
-        ):
-            score += 0.10
-
-    return min(score, 1.0)
-
-
-# ============================================================
 # MOVIE ENGINE
 # ============================================================
 
@@ -275,7 +223,9 @@ def get_mood_movies(
 
     candidates = movies.copy()
 
+    # --------------------------------------------------------
     # PERSONAL SCORE
+    # --------------------------------------------------------
 
     personal = get_personal_scores(user_id)
 
@@ -286,7 +236,8 @@ def get_mood_movies(
     )
 
     candidates["personal_score"] = (
-        candidates["personal_score"].fillna(0)
+        candidates["personal_score"]
+        .fillna(0)
     )
 
     candidates["personal_score_norm"] = (
@@ -295,7 +246,9 @@ def get_mood_movies(
         )
     )
 
+    # --------------------------------------------------------
     # RATING
+    # --------------------------------------------------------
 
     if (
         "avg_rating" not in candidates.columns
@@ -310,7 +263,9 @@ def get_mood_movies(
             ]
 
             if "rating_count" in ratings.columns:
-                rating_columns.append("rating_count")
+                rating_columns.append(
+                    "rating_count"
+                )
 
             rating_data = ratings[
                 rating_columns
@@ -336,7 +291,9 @@ def get_mood_movies(
         candidates["avg_rating"] / 5.0
     ).clip(0, 1)
 
+    # --------------------------------------------------------
     # MOOD
+    # --------------------------------------------------------
 
     candidates["mood_score"] = candidates[
         "genres"
@@ -347,7 +304,9 @@ def get_mood_movies(
         )
     )
 
+    # --------------------------------------------------------
     # TIME
+    # --------------------------------------------------------
 
     def time_score(genres):
 
@@ -379,7 +338,9 @@ def get_mood_movies(
         )
     )
 
+    # --------------------------------------------------------
     # WEATHER
+    # --------------------------------------------------------
 
     def weather_score(genres):
 
@@ -408,7 +369,9 @@ def get_mood_movies(
         )
     )
 
+    # --------------------------------------------------------
     # ENERGY
+    # --------------------------------------------------------
 
     def energy_score(genres):
 
@@ -450,7 +413,9 @@ def get_mood_movies(
         )
     )
 
-    # CONTEXT
+    # --------------------------------------------------------
+    # CONTEXT SCORE
+    # --------------------------------------------------------
 
     candidates["context_score"] = (
         0.30 * candidates["mood_score"]
@@ -459,7 +424,9 @@ def get_mood_movies(
         + 0.15 * candidates["energy_score"]
     )
 
+    # --------------------------------------------------------
     # FINAL SCORE
+    # --------------------------------------------------------
 
     candidates["final_score"] = (
         0.35 * candidates["personal_score_norm"]
@@ -472,7 +439,9 @@ def get_mood_movies(
         candidates["final_score"] * 100
     ).round(1)
 
+    # --------------------------------------------------------
     # RESULT
+    # --------------------------------------------------------
 
     result_columns = [
         "movie_id",
@@ -524,7 +493,8 @@ def get_activities(
 
         activities.append({
             "title": "Dance to your favorite songs",
-            "description": "Use the positive mood for movement.",
+            "description":
+                "Use the positive mood for movement.",
             "duration": 15
         })
 
@@ -532,13 +502,15 @@ def get_activities(
 
         activities.append({
             "title": "Indoor mobility",
-            "description": "Move around indoors and step away from the screen.",
+            "description":
+                "Move around indoors and step away from the screen.",
             "duration": 15
         })
 
     activities.append({
         "title": "Stretch session",
-        "description": "Loosen your body and reset your attention.",
+        "description":
+            "Loosen your body and reset your attention.",
         "duration": 10
     })
 
@@ -546,18 +518,30 @@ def get_activities(
 
 
 # ============================================================
-# API
+# FRONTEND
 # ============================================================
 
 @app.route("/", methods=["GET"])
 def home():
 
-    return jsonify({
-        "app": "MoodMate",
-        "status": "online",
-        "version": "1.0"
-    })
+    return send_from_directory(
+        FRONTEND_DIR,
+        "index.html"
+    )
 
+
+@app.route("/results.html", methods=["GET"])
+def results():
+
+    return send_from_directory(
+        FRONTEND_DIR,
+        "results.html"
+    )
+
+
+# ============================================================
+# API
+# ============================================================
 
 @app.route("/api/moodmate", methods=["POST"])
 def moodmate_api():
@@ -585,7 +569,8 @@ def moodmate_api():
     except (TypeError, ValueError):
 
         return jsonify({
-            "error": "user_id and hour must be integers"
+            "error":
+                "user_id and hour must be integers"
         }), 400
 
     mood = data.get(
@@ -632,6 +617,7 @@ def moodmate_api():
         ),
 
         "activities": activities
+
     })
 
 
