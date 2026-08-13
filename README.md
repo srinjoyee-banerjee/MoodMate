@@ -28,61 +28,46 @@ The system then generates personalized recommendations for:
 - 🎬 Movies
 - 🚶 Activities
 - 🧘 Relaxation / movement suggestions
-
----
-
-# 🚀 Core Idea
+# 🧠 MoodMate AI Recommendation Pipeline
 
 Traditional recommendation systems mainly depend on historical user preferences:
 
-```text
-User History
-     ↓
+User History  
+↓  
+Movie Preferences  
+↓  
+Movie Recommendation  
 
-Movie Preferences
-     ↓
-Movie Recommendation
-
-# 🧠 MoodMate AI Recommendation Pipeline
+MoodMate adds the user's current context:
 
 ```text
-USER HISTORY
-     ↓
-MOVIE PREFERENCES
-     ↓
-MOVIE RECOMMENDATION
-     │
-     │
-     ▼
 CURRENT CONTEXT
-     │
-     ├──────────────┬──────────────┐
-     │              │              │
-    Mood           Time         Weather
-     │              │              │
-     └──────────────┼──────────────┘
-                    │
-                  Energy
-                    │
-                    ▼
-             CONTEXT ANALYSIS
-                    │
-          ┌─────────┴─────────┐
-          │                   │
-          ▼                   ▼
-    MOVIE ENGINE        ACTIVITY ENGINE
-          │                   │
-          ▼                   ▼
-    PERSONALIZATION     ACTIVITY MODEL
-          │                   │
-          └─────────┬─────────┘
-                    │
-                    ▼
-             MOODMATE RESULTS
-                 
----
+      │
+      ├──────────────┬──────────────┐
+      │              │              │
+     Mood           Time         Weather
+      │              │              │
+      └──────────────┼──────────────┘
+                     │
+                   Energy
+                     │
+                     ▼
+              CONTEXT ANALYSIS
+                     │
+          ┌──────────┴──────────┐
+          │                     │
+          ▼                     ▼
+    MOVIE ENGINE          ACTIVITY ENGINE
+          │                     │
+          ▼                     ▼
+    PERSONALIZATION       ACTIVITY MODEL
+          │                     │
+          └──────────┬──────────┘
+                     │
+                     ▼
+              MOODMATE RESULTS
 
-### 2. Datasets & Technology Stack
+### Markdown 2 — Datasets & Technology
 
 ```markdown
 # 📊 Datasets
@@ -91,13 +76,27 @@ CURRENT CONTEXT
 
 Used for movie recommendation and personalization.
 
+- 3,883 movies
+- 1,000,209 ratings
+- 6,040 users
+- 18 genres
+
 ## Emotion Dataset
 
 Used for emotion classification.
 
+- 16,000 samples
+- TF-IDF features
+- 6 emotion classes
+
 ## UCI Human Activity Recognition
 
 Used for activity recognition.
+
+- 7,352 training samples
+- 2,947 testing samples
+- 561 features
+- 6 activity classes
 
 ---
 
@@ -168,6 +167,7 @@ MoodMate/
 │   ├── app.py
 │   ├── requirements.txt
 │   ├── README.md
+│   │
 │   └── models/
 │       ├── activity_labels.pkl
 │       ├── activity_model.pkl
@@ -179,5 +179,5 @@ MoodMate/
 │       └── user_preference_matrix.pkl
 │
 └── README.md
-
+---
 
