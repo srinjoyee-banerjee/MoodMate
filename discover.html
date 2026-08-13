@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width,initial-scale=1.0">
+
+<title>MoodMate — Discover</title>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap"
+      rel="stylesheet">
+
+<link rel="stylesheet"
+      href="style.css">
+
+</head>
+
+<body>
+
+<nav class="nav">
+
+<a class="logo"
+   href="index.html">
+
+Mood<span>Mate</span>
+
+</a>
+
+<div class="navlinks">
+
+<a href="index.html">Home</a>
+
+<a href="discover.html">Discover</a>
+
+<a href="moment.html">Your Moment</a>
+
+<a href="recommendations.html">
+Recommendations
+</a>
+
+<a href="journal.html">Journal</a>
+
+</div>
+
+</nav>
+
+
+<section class="section page">
+
+<div class="container">
+
+<div class="center">
+
+<div class="kicker">
+Step 1 · Discover
+</div>
+
+<h1 class="title">
+
+Tell us about<br>
+your moment.
+
+</h1>
+
+<p class="subtitle">
+
+Choose what feels right.
+MoodMate combines your mood,
+time, weather and energy to
+shape the experience.
+
+</p>
+
+</div>
+
+
+<div class="panel">
+
+
+<div class="grid4">
+
+
+<div class="card option active"
+     data-mood="joy">
+
+<div class="icon">😊</div>
+
+<h3>Joy</h3>
+
+<p>
+Light, positive and playful.
+</p>
+
+</div>
+
+
+<div class="card option"
+     data-mood="sadness">
+
+<div class="icon">😔</div>
+
+<h3>Sadness</h3>
+
+<p>
+Comfort and calm.
+</p>
+
+</div>
+
+
+<div class="card option"
+     data-mood="anger">
+
+<div class="icon">😤</div>
+
+<h3>Anger</h3>
+
+<p>
+Release and reset.
+</p>
+
+</div>
+
+
+<div class="card option"
+     data-mood="fear">
+
+<div class="icon">😨</div>
+
+<h3>Fear</h3>
+
+<p>
+Safe and familiar.
+</p>
+
+</div>
+
+
+<div class="card option"
+     data-mood="love">
+
+<div class="icon">❤️</div>
+
+<h3>Love</h3>
+
+<p>
+Warm and connected.
+</p>
+
+</div>
+
+
+<div class="card option"
+     data-mood="surprise">
+
+<div class="icon">😮</div>
+
+<h3>Surprise</h3>
+
+<p>
+Try something new.
+</p>
+
+</div>
+
+
+<div class="card option"
+     data-mood="neutral">
+
+<div class="icon">😌</div>
+
+<h3>Neutral</h3>
+
+<p>
+Balanced and flexible.
+</p>
+
+</div>
+
+
+</div>
+
+
+<div class="controls">
+
+<h2>
+Build your context
+</h2>
+
+
+<div class="controls-grid">
+
+
+<div>
+
+<label>Time</label>
+
+<select id="time">
+
+<option value="morning">
+Morning
+</option>
+
+<option value="afternoon">
+Afternoon
+</option>
+
+<option value="evening"
+        selected>
+Evening
+</option>
+
+<option value="night">
+Night
+</option>
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>Weather</label>
+
+<select id="weather">
+
+<option value="sunny">
+Sunny
+</option>
+
+<option value="cloudy">
+Cloudy
+</option>
+
+<option value="rain"
+        selected>
+Rain
+</option>
+
+<option value="snow">
+Snow
+</option>
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>Energy</label>
+
+<select id="energy">
+
+<option value="low">
+Low
+</option>
+
+<option value="medium"
+        selected>
+Medium
+</option>
+
+<option value="high">
+High
+</option>
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>Current hour</label>
+
+<input
+id="hour"
+type="number"
+min="0"
+max="23">
+
+</div>
+
+
+</div>
+
+
+<button
+class="btn full"
+id="create">
+
+✨ Create my moment
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<footer class="footer">
+
+<div>
+<strong>MoodMate</strong>
+— Break the Scroll
+</div>
+
+<div>
+AI-powered mood experiences
+</div>
+
+</footer>
+
+
+<script>
+
+let selectedMood = "joy";
+
+
+document
+.querySelectorAll(".option")
+.forEach(card => {
+
+card.addEventListener(
+"click",
+() => {
+
+document
+.querySelectorAll(".option")
+.forEach(
+x => x.classList.remove("active")
+);
+
+card.classList.add("active");
+
+selectedMood =
+card.dataset.mood;
+
+});
+
+});
+
+
+document.getElementById("hour")
+.value = new Date().getHours();
+
+
+document
+.getElementById("create")
+.addEventListener(
+"click",
+async () => {
+
+const button =
+document.getElementById("create");
+
+button.disabled = true;
+
+button.textContent =
+"✨ Creating your moment...";
+
+
+const payload = {
+
+user_id: 1,
+
+mood: selectedMood,
+
+time_of_day:
+document.getElementById("time").value,
+
+weather:
+document.getElementById("weather").value,
+
+energy:
+document.getElementById("energy").value,
+
+hour:
+Number(
+document.getElementById("hour").value
+)
+
+};
+
+
+try {
+
+const response =
+await fetch(
+"/api/moodmate",
+{
+
+method: "POST",
+
+headers: {
+"Content-Type":
+"application/json"
+},
+
+body:
+JSON.stringify(payload)
+
+});
+
+
+if (!response.ok) {
+
+throw new Error(
+"Backend error"
+);
+
+}
+
+
+const data =
+await response.json();
+
+
+localStorage.setItem(
+"moodmate_result",
+JSON.stringify(data)
+);
+
+
+localStorage.setItem(
+"moodmate_context",
+JSON.stringify(payload)
+);
+
+
+window.location.href =
+"moment.html";
+
+
+}
+
+catch(error) {
+
+console.error(error);
+
+alert(
+"MoodMate could not connect to the AI backend."
+);
+
+button.disabled = false;
+
+button.textContent =
+"✨ Create my moment";
+
+}
+
+});
+
+</script>
+
+</body>
+</html>
