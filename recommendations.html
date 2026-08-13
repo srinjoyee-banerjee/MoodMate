@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width,initial-scale=1.0">
+
+<title>MoodMate — Recommendations</title>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap"
+      rel="stylesheet">
+
+<link rel="stylesheet"
+      href="style.css">
+
+</head>
+
+<body>
+
+
+<nav class="nav">
+
+<a class="logo"
+   href="index.html">
+
+Mood<span>Mate</span>
+
+</a>
+
+<div class="navlinks">
+
+<a href="index.html">Home</a>
+
+<a href="discover.html">Discover</a>
+
+<a href="moment.html">Your Moment</a>
+
+<a href="recommendations.html">
+Recommendations
+</a>
+
+<a href="journal.html">Journal</a>
+
+</div>
+
+</nav>
+
+
+<section class="section page">
+
+<div class="container">
+
+
+<div class="center">
+
+<div class="kicker">
+Step 3 · Recommendations
+</div>
+
+<h1 class="title">
+
+Something worth watching.<br>
+Something worth doing.
+
+</h1>
+
+<p class="subtitle">
+
+Your recommendations combine
+mood, personal preference,
+ratings and current context.
+
+</p>
+
+</div>
+
+
+<div style="margin-top:65px">
+
+<div class="kicker">
+If you want to watch
+</div>
+
+<h2 style="font-size:45px;margin-top:10px">
+
+Movie matches
+
+</h2>
+
+
+<div
+class="movie-grid"
+id="movies"
+style="margin-top:25px">
+
+</div>
+
+</div>
+
+
+<div style="margin-top:90px">
+
+<div class="kicker">
+Before you scroll again
+</div>
+
+<h2 style="font-size:45px;margin-top:10px">
+
+Break the scroll.
+
+</h2>
+
+
+<div
+class="grid3"
+id="activities"
+style="margin-top:25px">
+
+</div>
+
+</div>
+
+
+<div class="center"
+     style="margin-top:70px">
+
+<a
+class="btn"
+href="journal.html">
+
+Reflect on this moment →
+
+</a>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<footer class="footer">
+
+<div>
+<strong>MoodMate</strong>
+— Break the Scroll
+</div>
+
+<div>
+AI-powered mood experiences
+</div>
+
+</footer>
+
+
+<script>
+
+const data =
+JSON.parse(
+localStorage.getItem(
+"moodmate_result"
+) || "null"
+);
+
+
+const movieContainer =
+document.getElementById(
+"movies"
+);
+
+
+const activityContainer =
+document.getElementById(
+"activities"
+);
+
+
+if(!data){
+
+movieContainer.innerHTML = `
+
+<div class="empty">
+
+Create a moment first
+from the Discover page.
+
+</div>
+
+`;
+
+}
+
+else{
+
+
+/* MOVIES */
+
+(data.movies || [])
+.slice(0,5)
+.forEach(
+(movie,index) => {
+
+const card =
+document.createElement("div");
+
+card.className =
+"movie";
+
+
+const icons = [
+"🎬",
+"🍿",
+"🎞️",
+"🎥",
+"✨"
+];
+
+
+const score =
+Math.round(
+Number(
+movie.match_percent || 0
+)
+);
+
+
+card.innerHTML = `
+
+<div class="poster">
+
+${icons[index]}
+
+</div>
+
+<div class="movie-info">
+
+<div class="movie-title">
+
+${movie.title ||
+"Recommended movie"}
+
+</div>
+
+<div class="genre">
+
+${movie.genres ||
+"Movie"}
+
+</div>
+
+<div class="match">
+
+${score}%
+
+</div>
+
+<div class="genre">
+
+MoodMate match
+
+</div>
+
+</div>
+
+`;
+
+
+movieContainer.appendChild(
+card
+);
+
+});
+
+
+/* ACTIVITIES */
+
+(data.activities || [])
+.forEach(
+activity => {
+
+const card =
+document.createElement("div");
+
+card.className =
+"activity";
+
+
+card.innerHTML = `
+
+<div class="icon">
+
+${activity.icon || "✨"}
+
+</div>
+
+<h3>
+
+${activity.title ||
+"Take a break"}
+
+</h3>
+
+<p>
+
+${activity.description || ""}
+
+</p>
+
+<span class="duration">
+
+⏱ ${activity.duration || 10} min
+
+</span>
+
+`;
+
+
+activityContainer.appendChild(
+card
+);
+
+});
+
+}
+
+</script>
+
+</body>
+</html>
