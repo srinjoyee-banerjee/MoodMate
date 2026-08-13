@@ -39,7 +39,7 @@ Movie Preferences
 ↓  
 Movie Recommendation  
 
-## **MoodMate adds the user's current context: **
+## MoodMate adds the user's current context: 
 
 
             CURRENT CONTEXT
@@ -68,7 +68,7 @@ Movie Recommendation
                      ▼
               MOODMATE RESULTS
 
-###  Datasets & Technology
+
 
 
 # 📊 Datasets
