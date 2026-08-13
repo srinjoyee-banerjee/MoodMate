@@ -67,7 +67,7 @@ Movie Recommendation
                        │
                        ▼
                MOODMATE RESULTS
-Movie Recommendation
+# Movie Recommendation
 
 The movie engine combines:
 
