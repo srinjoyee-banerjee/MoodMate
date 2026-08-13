@@ -169,16 +169,16 @@ def calculate_mood_score(genres, mood):
             "thriller"
         ],
 
-        "surprise": [
-            "adventure",
-            "sci-fi",
-            "fantasy"
-        ],
-
         "love": [
             "romance",
             "comedy",
             "drama"
+        ],
+
+        "surprise": [
+            "adventure",
+            "sci-fi",
+            "fantasy"
         ],
 
         "neutral": [
@@ -208,6 +208,67 @@ def calculate_mood_score(genres, mood):
 
 
 # ============================================================
+# CONTEXT SCORE
+# ============================================================
+
+def calculate_context_score(
+    genres,
+    hour,
+    weather,
+    energy
+):
+
+    genres = str(genres).lower()
+    weather = str(weather).lower()
+    energy = str(energy).lower()
+
+    score = 0.5
+
+    # Evening
+    if 17 <= hour <= 22:
+
+        if any(
+            genre in genres
+            for genre in [
+                "comedy",
+                "romance",
+                "drama",
+                "animation"
+            ]
+        ):
+            score += 0.20
+
+    # Rain
+    if weather == "rain":
+
+        if any(
+            genre in genres
+            for genre in [
+                "comedy",
+                "romance",
+                "animation",
+                "drama"
+            ]
+        ):
+            score += 0.20
+
+    # Medium energy
+    if energy == "medium":
+
+        if any(
+            genre in genres
+            for genre in [
+                "comedy",
+                "adventure",
+                "animation"
+            ]
+        ):
+            score += 0.10
+
+    return min(score, 1.0)
+
+
+# ============================================================
 # MOVIE ENGINE
 # ============================================================
 
@@ -221,7 +282,6 @@ def get_mood_movies(
 ):
 
     candidates = movies.copy()
-
 
     # --------------------------------------------------------
     # PERSONAL SCORE
@@ -246,9 +306,8 @@ def get_mood_movies(
         )
     )
 
-
     # --------------------------------------------------------
-    # RATING
+    # RATINGS
     # --------------------------------------------------------
 
     if (
@@ -280,7 +339,6 @@ def get_mood_movies(
                 how="left"
             )
 
-
     if "avg_rating" not in candidates.columns:
         candidates["avg_rating"] = 0.0
 
@@ -293,7 +351,6 @@ def get_mood_movies(
         candidates["avg_rating"] / 5.0
     ).clip(0, 1)
 
-
     # --------------------------------------------------------
     # MOOD
     # --------------------------------------------------------
@@ -301,12 +358,12 @@ def get_mood_movies(
     candidates["mood_score"] = candidates[
         "genres"
     ].apply(
-        lambda value: calculate_mood_score(
+        lambda value:
+        calculate_mood_score(
             value,
             mood
         )
     )
-
 
     # --------------------------------------------------------
     # TIME
@@ -332,17 +389,30 @@ def get_mood_movies(
             return 0.6
 
         if 6 <= hour < 12:
+
+            if any(
+                genre in genres
+                for genre in [
+                    "animation",
+                    "comedy",
+                    "adventure"
+                ]
+            ):
+                return 0.9
+
             return 0.8
 
-        return 0.7
+        if 12 <= hour < 17:
 
+            return 0.75
+
+        return 0.7
 
     candidates["time_score"] = (
         candidates["genres"].apply(
             time_score
         )
     )
-
 
     # --------------------------------------------------------
     # WEATHER
@@ -367,15 +437,45 @@ def get_mood_movies(
 
             return 0.85
 
-        return 0.9
+        if weather.lower() == "sunny":
 
+            if any(
+                genre in genres
+                for genre in [
+                    "adventure",
+                    "comedy",
+                    "animation"
+                ]
+            ):
+                return 1.0
+
+            return 0.9
+
+        if weather.lower() == "cloudy":
+
+            return 0.9
+
+        if weather.lower() == "snow":
+
+            if any(
+                genre in genres
+                for genre in [
+                    "romance",
+                    "drama",
+                    "comedy"
+                ]
+            ):
+                return 1.0
+
+            return 0.85
+
+        return 0.9
 
     candidates["weather_score"] = (
         candidates["genres"].apply(
             weather_score
         )
     )
-
 
     # --------------------------------------------------------
     # ENERGY
@@ -384,6 +484,20 @@ def get_mood_movies(
     def energy_score(genres):
 
         genres = str(genres).lower()
+
+        if energy.lower() == "low":
+
+            if any(
+                genre in genres
+                for genre in [
+                    "drama",
+                    "romance",
+                    "animation"
+                ]
+            ):
+                return 1.0
+
+            return 0.85
 
         if energy.lower() == "medium":
 
@@ -415,60 +529,94 @@ def get_mood_movies(
 
         return 0.8
 
-
     candidates["energy_score"] = (
         candidates["genres"].apply(
             energy_score
         )
     )
 
-
     # --------------------------------------------------------
-    # CONTEXT SCORE
+    # CONTEXT
     # --------------------------------------------------------
 
     candidates["context_score"] = (
-        0.30 * candidates["mood_score"]
-        + 0.15 * candidates["time_score"]
-        + 0.15 * candidates["weather_score"]
-        + 0.15 * candidates["energy_score"]
-    )
 
+        0.30 *
+        candidates["mood_score"]
+
+        +
+
+        0.15 *
+        candidates["time_score"]
+
+        +
+
+        0.15 *
+        candidates["weather_score"]
+
+        +
+
+        0.15 *
+        candidates["energy_score"]
+    )
 
     # --------------------------------------------------------
     # FINAL SCORE
     # --------------------------------------------------------
 
     candidates["final_score"] = (
-        0.35 * candidates["personal_score_norm"]
-        + 0.25 * candidates["mood_score"]
-        + 0.20 * candidates["rating_norm"]
-        + 0.20 * candidates["context_score"]
-    ).clip(0, 1)
 
+        0.35 *
+        candidates["personal_score_norm"]
+
+        +
+
+        0.25 *
+        candidates["mood_score"]
+
+        +
+
+        0.20 *
+        candidates["rating_norm"]
+
+        +
+
+        0.20 *
+        candidates["context_score"]
+
+    ).clip(0, 1)
 
     candidates["match_percent"] = (
         candidates["final_score"] * 100
     ).round(1)
-
 
     # --------------------------------------------------------
     # RESULT
     # --------------------------------------------------------
 
     result_columns = [
+
         "movie_id",
         "title",
         "genres",
         "avg_rating",
+
         "personal_score_norm",
+
         "mood_score",
+
         "time_score",
+
         "weather_score",
+
         "energy_score",
+
         "rating_norm",
+
         "context_score",
+
         "final_score",
+
         "match_percent"
     ]
 
@@ -502,40 +650,156 @@ def get_activities(
 
     activities = []
 
-
+    # JOY
     if mood == "joy":
 
         activities.append({
-            "title": "Dance to your favorite songs",
+            "title":
+                "Dance to your favorite songs",
+
             "description":
-                "Use the positive mood for movement.",
+                "Use your positive mood for movement instead of endless scrolling.",
+
             "duration": 15
         })
 
+    # SADNESS
+    elif mood == "sadness":
 
+        activities.append({
+            "title":
+                "Quiet journaling",
+
+            "description":
+                "Write down what you are feeling and give yourself a few quiet minutes.",
+
+            "duration": 10
+        })
+
+    # ANGER
+    elif mood == "anger":
+
+        activities.append({
+            "title":
+                "Fast movement reset",
+
+            "description":
+                "Use controlled movement to release some of that restless energy.",
+
+            "duration": 15
+        })
+
+    # FEAR
+    elif mood == "fear":
+
+        activities.append({
+            "title":
+                "Slow breathing reset",
+
+            "description":
+                "Step away from the screen and spend a few minutes slowing your breathing.",
+
+            "duration": 10
+        })
+
+    # LOVE
+    elif mood == "love":
+
+        activities.append({
+            "title":
+                "Message someone you care about",
+
+            "description":
+                "Turn the feeling into a real human connection.",
+
+            "duration": 10
+        })
+
+    # SURPRISE
+    elif mood == "surprise":
+
+        activities.append({
+            "title":
+                "Try something completely new",
+
+            "description":
+                "Use your curiosity to explore a new creative activity.",
+
+            "duration": 15
+        })
+
+    # RAIN
     if weather == "rain":
 
         activities.append({
-            "title": "Indoor mobility",
+            "title":
+                "Indoor mobility",
+
             "description":
                 "Move around indoors and step away from the screen.",
+
             "duration": 15
         })
 
+    # HIGH ENERGY
+    if energy == "high":
 
-    activities.append({
-        "title": "Stretch session",
-        "description":
-            "Loosen your body and reset your attention.",
-        "duration": 10
-    })
+        activities.append({
+            "title":
+                "Quick bodyweight workout",
 
+            "description":
+                "Use your extra energy for a short movement session.",
 
-    return activities[:3]
+            "duration": 15
+        })
+
+    # LOW ENERGY
+    elif energy == "low":
+
+        activities.append({
+            "title":
+                "Gentle stretch session",
+
+            "description":
+                "Loosen your body and reset your attention without exhausting yourself.",
+
+            "duration": 10
+        })
+
+    # MEDIUM ENERGY
+    else:
+
+        activities.append({
+            "title":
+                "Stretch session",
+
+            "description":
+                "Loosen your body and reset your attention.",
+
+            "duration": 10
+        })
+
+    # Remove duplicate titles
+    unique = []
+
+    seen = set()
+
+    for activity in activities:
+
+        title = activity["title"]
+
+        if title not in seen:
+
+            unique.append(activity)
+
+            seen.add(title)
+
+    return unique[:3]
 
 
 # ============================================================
-# FRONTEND ROUTES
+# FRONTEND PAGES
 # ============================================================
 
 @app.route("/", methods=["GET"])
@@ -547,8 +811,26 @@ def home():
     )
 
 
+@app.route("/mood.html", methods=["GET"])
+def mood_page():
+
+    return send_from_directory(
+        BASE_DIR,
+        "mood.html"
+    )
+
+
+@app.route("/moment.html", methods=["GET"])
+def moment_page():
+
+    return send_from_directory(
+        BASE_DIR,
+        "moment.html"
+    )
+
+
 @app.route("/results.html", methods=["GET"])
-def results():
+def results_page():
 
     return send_from_directory(
         BASE_DIR,
@@ -556,20 +838,31 @@ def results():
     )
 
 
+@app.route("/activities.html", methods=["GET"])
+def activities_page():
+
+    return send_from_directory(
+        BASE_DIR,
+        "activities.html"
+    )
+
+
 # ============================================================
-# MOODMATE API
+# AI API
 # ============================================================
 
-@app.route("/api/moodmate", methods=["POST"])
+@app.route(
+    "/api/moodmate",
+    methods=["POST"]
+)
 def moodmate_api():
 
     data = request.get_json(
         silent=True
     ) or {}
 
-
     # --------------------------------------------------------
-    # INPUTS
+    # USER ID
     # --------------------------------------------------------
 
     try:
@@ -581,6 +874,22 @@ def moodmate_api():
             )
         )
 
+    except (
+        TypeError,
+        ValueError
+    ):
+
+        return jsonify({
+            "error":
+                "user_id must be an integer"
+        }), 400
+
+    # --------------------------------------------------------
+    # HOUR
+    # --------------------------------------------------------
+
+    try:
+
         hour = int(
             data.get(
                 "hour",
@@ -588,54 +897,89 @@ def moodmate_api():
             )
         )
 
-    except (TypeError, ValueError):
+    except (
+        TypeError,
+        ValueError
+    ):
 
         return jsonify({
             "error":
-                "user_id and hour must be integers"
+                "hour must be an integer"
         }), 400
 
+    # Keep hour inside valid range
 
-    mood = data.get(
-        "mood",
-        "joy"
+    hour = max(
+        0,
+        min(
+            23,
+            hour
+        )
     )
-
-    weather = data.get(
-        "weather",
-        "rain"
-    )
-
-    energy = data.get(
-        "energy",
-        "medium"
-    )
-
 
     # --------------------------------------------------------
-    # GENERATE MOVIES
+    # CONTEXT
+    # --------------------------------------------------------
+
+    mood = str(
+        data.get(
+            "mood",
+            "joy"
+        )
+    ).lower()
+
+    weather = str(
+        data.get(
+            "weather",
+            "rain"
+        )
+    ).lower()
+
+    energy = str(
+        data.get(
+            "energy",
+            "medium"
+        )
+    ).lower()
+
+    time_of_day = str(
+        data.get(
+            "time_of_day",
+            "evening"
+        )
+    ).lower()
+
+    # --------------------------------------------------------
+    # AI RECOMMENDATIONS
     # --------------------------------------------------------
 
     movies_result = get_mood_movies(
+
         user_id=user_id,
+
         mood=mood,
+
         hour=hour,
+
         weather=weather,
+
         energy=energy,
+
         n=5
     )
 
-
     # --------------------------------------------------------
-    # GENERATE ACTIVITIES
+    # ACTIVITIES
     # --------------------------------------------------------
 
     activities = get_activities(
-        mood,
-        weather,
-        energy
-    )
 
+        mood=mood,
+
+        weather=weather,
+
+        energy=energy
+    )
 
     # --------------------------------------------------------
     # RESPONSE
@@ -643,16 +987,22 @@ def moodmate_api():
 
     return jsonify({
 
+        "status": "success",
+
         "context": {
 
             "mood": mood,
 
             "hour": hour,
 
-            "weather": weather,
+            "time_of_day":
+                time_of_day,
 
-            "energy": energy
+            "weather":
+                weather,
 
+            "energy":
+                energy
         },
 
         "movies":
@@ -663,6 +1013,35 @@ def moodmate_api():
         "activities":
             activities
 
+    })
+
+
+# ============================================================
+# HEALTH CHECK
+# ============================================================
+
+@app.route(
+    "/api/health",
+    methods=["GET"]
+)
+def health():
+
+    return jsonify({
+
+        "app":
+            "MoodMate",
+
+        "status":
+            "online",
+
+        "version":
+            "2.0",
+
+        "ai":
+            "loaded",
+
+        "pages":
+            5
     })
 
 
