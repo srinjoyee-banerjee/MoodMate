@@ -228,7 +228,6 @@ def calculate_context_score(
 
     score = 0.5
 
-    # Evening
     if 17 <= hour <= 22:
 
         if any(
@@ -242,7 +241,6 @@ def calculate_context_score(
         ):
             score += 0.20
 
-    # Rain
     if weather == "rain":
 
         if any(
@@ -256,7 +254,6 @@ def calculate_context_score(
         ):
             score += 0.20
 
-    # Medium energy
     if energy == "medium":
 
         if any(
@@ -553,29 +550,17 @@ def get_mood_movies(
     result_columns = [
 
         "movie_id",
-
         "title",
-
         "genres",
-
         "avg_rating",
-
         "personal_score_norm",
-
         "mood_score",
-
         "time_score",
-
         "weather_score",
-
         "energy_score",
-
         "rating_norm",
-
         "context_score",
-
         "final_score",
-
         "match_percent"
     ]
 
@@ -619,7 +604,6 @@ def get_activities(
 
     activities = []
 
-
     if mood == "joy":
 
         activities.append({
@@ -633,7 +617,6 @@ def get_activities(
             "duration":
                 15
         })
-
 
     if weather == "rain":
 
@@ -649,7 +632,6 @@ def get_activities(
                 15
         })
 
-
     activities.append({
 
         "title":
@@ -661,7 +643,6 @@ def get_activities(
         "duration":
             10
     })
-
 
     return activities[:3]
 
@@ -699,7 +680,6 @@ def moodmate_api():
         silent=True
     ) or {}
 
-
     user_id = int(
         data.get(
             "user_id",
@@ -707,12 +687,10 @@ def moodmate_api():
         )
     )
 
-
     mood = data.get(
         "mood",
         "joy"
     )
-
 
     hour = int(
         data.get(
@@ -721,18 +699,15 @@ def moodmate_api():
         )
     )
 
-
     weather = data.get(
         "weather",
         "rain"
     )
 
-
     energy = data.get(
         "energy",
         "medium"
     )
-
 
     movies_result = get_mood_movies(
 
@@ -749,7 +724,6 @@ def moodmate_api():
         n=5
     )
 
-
     activities = get_activities(
 
         mood,
@@ -758,7 +732,6 @@ def moodmate_api():
 
         energy
     )
-
 
     return jsonify({
 
@@ -777,16 +750,13 @@ def moodmate_api():
                 energy
         },
 
-
         "movies":
             movies_result.to_dict(
                 orient="records"
             ),
 
-
         "activities":
             activities
-
     })
 
 
@@ -804,9 +774,7 @@ if __name__ == "__main__":
     )
 
     app.run(
-
         host="0.0.0.0",
-
         port=port
     )
 ```
