@@ -1,0 +1,793 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MoodMate — Your Moment</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    background:#fffaf5;
+    color:#241914;
+    font-family:"DM Sans",sans-serif;
+}
+
+/* LOADER */
+
+.loader{
+    position:fixed;
+    inset:0;
+    background:#f47b20;
+    z-index:9999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:1s;
+}
+
+.loader.hide{
+    opacity:0;
+    visibility:hidden;
+}
+
+.loader h1{
+    color:white;
+    font-family:"Playfair Display",serif;
+    font-size:55px;
+    animation:pulse 1.4s infinite;
+}
+
+@keyframes pulse{
+    50%{transform:scale(1.05)}
+}
+
+/* NAV */
+
+nav{
+    padding:25px 7%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#fffaf5;
+}
+
+.logo{
+    font-family:"Playfair Display",serif;
+    font-size:28px;
+    font-weight:bold;
+}
+
+.logo span{
+    color:#f47b20;
+}
+
+.back{
+    text-decoration:none;
+    color:#6e625b;
+    font-size:14px;
+}
+
+/* HERO */
+
+.result-hero{
+    padding:80px 8% 70px;
+
+    background:
+    linear-gradient(
+        110deg,
+        #241914,
+        #39231a
+    );
+
+    color:white;
+}
+
+.eyebrow{
+    color:#ff9a4a;
+    text-transform:uppercase;
+    letter-spacing:4px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.result-hero h1{
+    font-family:"Playfair Display",serif;
+    font-size:clamp(48px,6vw,82px);
+    line-height:.95;
+    margin-top:18px;
+}
+
+.result-hero h1 span{
+    color:#ff8b3d;
+}
+
+.context{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:30px;
+}
+
+.pill{
+    padding:10px 16px;
+    border:1px solid rgba(255,255,255,.2);
+    border-radius:30px;
+    color:#f4e9e2;
+    font-size:13px;
+}
+
+/* MAIN */
+
+main{
+    padding:90px 8%;
+}
+
+/* SECTION */
+
+.section-header{
+    margin-bottom:35px;
+}
+
+.section-label{
+    color:#f47b20;
+    text-transform:uppercase;
+    letter-spacing:4px;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.section-header h2{
+    font-family:"Playfair Display",serif;
+    font-size:48px;
+    margin-top:10px;
+}
+
+.section-header p{
+    color:#766960;
+    margin-top:10px;
+}
+
+/* MOVIES */
+
+.movies{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:20px;
+}
+
+.movie{
+    background:white;
+    border:1px solid #eee2d9;
+    border-radius:20px;
+    overflow:hidden;
+    transition:.4s;
+    animation:cardIn .7s both;
+}
+
+.movie:hover{
+    transform:translateY(-12px);
+    box-shadow:0 25px 50px rgba(60,30,10,.12);
+}
+
+.poster{
+    height:260px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #f47b20,
+        #542415
+    );
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:55px;
+}
+
+.movie-info{
+    padding:20px;
+}
+
+.movie-title{
+    font-weight:700;
+    line-height:1.3;
+}
+
+.genre{
+    color:#8b7b72;
+    font-size:12px;
+    margin-top:8px;
+}
+
+.score{
+    margin-top:16px;
+}
+
+.score-number{
+    font-size:28px;
+    font-weight:700;
+    color:#f47b20;
+}
+
+.score-label{
+    font-size:11px;
+    color:#94857d;
+}
+
+/* ACTIVITIES */
+
+.activity-section{
+    margin-top:110px;
+}
+
+.activities{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:25px;
+}
+
+.activity{
+    position:relative;
+    padding:32px;
+
+    min-height:230px;
+
+    border-radius:28px;
+
+    background:#211713;
+    color:white;
+
+    overflow:hidden;
+
+    animation:cardIn .8s both;
+}
+
+.activity::after{
+    content:"";
+    position:absolute;
+
+    width:180px;
+    height:180px;
+
+    right:-70px;
+    bottom:-70px;
+
+    border-radius:50%;
+
+    background:#f47b20;
+    opacity:.25;
+}
+
+.activity-icon{
+    font-size:42px;
+}
+
+.activity h3{
+    margin-top:22px;
+    font-family:"Playfair Display",serif;
+    font-size:27px;
+}
+
+.activity p{
+    margin-top:10px;
+    color:#cfc0b8;
+    line-height:1.6;
+    font-size:14px;
+}
+
+.duration{
+    display:inline-block;
+    margin-top:20px;
+    padding:7px 12px;
+    border-radius:20px;
+    background:#f47b20;
+    font-size:11px;
+    font-weight:bold;
+}
+
+/* BREAK SCROLL */
+
+.break{
+    margin-top:100px;
+
+    padding:65px;
+
+    border-radius:35px;
+
+    background:
+    linear-gradient(
+        120deg,
+        #f47b20,
+        #d95813
+    );
+
+    color:white;
+
+    text-align:center;
+}
+
+.break h2{
+    font-family:"Playfair Display",serif;
+    font-size:52px;
+}
+
+.break p{
+    max-width:600px;
+    margin:18px auto 0;
+    color:#fff1e7;
+    line-height:1.7;
+}
+
+.new-moment{
+    margin-top:30px;
+    padding:15px 28px;
+    border:none;
+    border-radius:30px;
+
+    background:white;
+    color:#e56516;
+
+    font-weight:bold;
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.new-moment:hover{
+    transform:scale(1.05);
+}
+
+/* ANIMATION */
+
+@keyframes cardIn{
+    from{
+        opacity:0;
+        transform:translateY(35px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1000px){
+
+    .movies{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .activities{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:600px){
+
+    main{
+        padding:60px 6%;
+    }
+
+    .movies{
+        grid-template-columns:1fr;
+    }
+
+    .break{
+        padding:40px 20px;
+    }
+
+    .break h2{
+        font-size:38px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="loader" id="loader">
+    <h1>MoodMate</h1>
+</div>
+
+<nav>
+
+    <div class="logo">
+        Mood<span>Mate</span>
+    </div>
+
+    <a href="index.html" class="back">
+        ← Change my mood
+    </a>
+
+</nav>
+
+
+<section class="result-hero">
+
+    <div class="eyebrow">
+        Your MoodMate moment
+    </div>
+
+    <h1>
+        Here's what<br>
+        <span>fits your moment.</span>
+    </h1>
+
+    <div class="context" id="context"></div>
+
+</section>
+
+
+<main>
+
+    <section>
+
+        <div class="section-header">
+
+            <div class="section-label">
+                If you want to watch
+            </div>
+
+            <h2>
+                Something worth watching.
+            </h2>
+
+            <p>
+                Personalized using your mood, preferences,
+                context and MovieLens ratings.
+            </p>
+
+        </div>
+
+        <div class="movies" id="movies">
+
+            <div class="movie">
+                <div class="poster">🎬</div>
+                <div class="movie-info">
+                    <div class="movie-title">
+                        Loading your recommendations...
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="activity-section">
+
+        <div class="section-header">
+
+            <div class="section-label">
+                But before you start scrolling
+            </div>
+
+            <h2>
+                Break the scroll.
+            </h2>
+
+            <p>
+                Your mood can be used for something
+                better than another hour on your phone.
+            </p>
+
+        </div>
+
+        <div class="activities" id="activities"></div>
+
+    </section>
+
+
+    <section class="break">
+
+        <h2>
+            Your next 15 minutes matter.
+        </h2>
+
+        <p>
+            Pick one thing. Put your phone down.
+            Come back when you're ready.
+        </p>
+
+        <button class="new-moment"
+                onclick="window.location.href='index.html'">
+            Create another moment
+        </button>
+
+    </section>
+
+</main>
+
+
+<script>
+
+/* LOADER */
+
+window.addEventListener("load",()=>{
+
+    setTimeout(()=>{
+
+        document
+        .getElementById("loader")
+        .classList.add("hide");
+
+    },900);
+
+});
+
+
+/* GET BACKEND RESULT */
+
+let data = null;
+
+try{
+
+    data =
+        JSON.parse(
+            localStorage.getItem("moodmate_result")
+        );
+
+}catch(e){
+
+    console.log("No saved result");
+
+}
+
+
+/* CONTEXT */
+
+const context =
+    document.getElementById("context");
+
+
+if(data && data.context){
+
+    const c = data.context;
+
+    context.innerHTML = `
+
+        <div class="pill">😊 ${c.mood}</div>
+
+        <div class="pill">🕐 ${c.hour}:00</div>
+
+        <div class="pill">🌧️ ${c.weather}</div>
+
+        <div class="pill">⚡ ${c.energy}</div>
+
+    `;
+
+}else{
+
+    context.innerHTML = `
+
+        <div class="pill">😊 Joy</div>
+        <div class="pill">🌆 Evening</div>
+        <div class="pill">🌧️ Rain</div>
+        <div class="pill">⚡ Medium energy</div>
+
+    `;
+
+}
+
+
+/* MOVIES */
+
+const movieContainer =
+    document.getElementById("movies");
+
+
+function renderMovies(){
+
+    if(!data || !data.movies){
+
+        movieContainer.innerHTML = `
+            <div class="movie">
+                <div class="poster">🎬</div>
+                <div class="movie-info">
+                    <div class="movie-title">
+                        Your recommendations will appear here.
+                    </div>
+                </div>
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    movieContainer.innerHTML = "";
+
+
+    data.movies.slice(0,5).forEach((movie,index)=>{
+
+        const card =
+            document.createElement("div");
+
+        card.className = "movie";
+
+        card.style.animationDelay =
+            `${index * .12}s`;
+
+
+        const score =
+            Math.round(
+                Math.max(
+                    0,
+                    Math.min(
+                        100,
+                        Number(movie.match_percent || 0)
+                    )
+                )
+            );
+
+
+        card.innerHTML = `
+
+            <div class="poster">
+                ${["🎬","🍿","🎞️","🎥","✨"][index]}
+            </div>
+
+            <div class="movie-info">
+
+                <div class="movie-title">
+                    ${movie.title || "Recommended Movie"}
+                </div>
+
+                <div class="genre">
+                    ${movie.genres || "Movie"}
+                </div>
+
+                <div class="score">
+
+                    <div class="score-number">
+                        ${score}%
+                    </div>
+
+                    <div class="score-label">
+                        MoodMate match
+                    </div>
+
+                </div>
+
+            </div>
+
+        `;
+
+
+        movieContainer.appendChild(card);
+
+    });
+
+}
+
+
+/* ACTIVITIES */
+
+const activityContainer =
+    document.getElementById("activities");
+
+
+function renderActivities(){
+
+    const activities =
+        data && data.activities
+        ? data.activities
+        : [
+
+            {
+                title:"🎵 Dance to your favorite songs",
+                description:
+                    "Use your positive mood for movement instead of endless scrolling.",
+                duration:15
+            },
+
+            {
+                title:"🏠 Indoor mobility",
+                description:
+                    "Move around indoors and step away from the screen.",
+                duration:15
+            },
+
+            {
+                title:"🧘 Stretch session",
+                description:
+                    "Loosen your body and reset your attention.",
+                duration:10
+            }
+
+        ];
+
+
+    activityContainer.innerHTML = "";
+
+
+    activities.forEach((activity,index)=>{
+
+        const card =
+            document.createElement("div");
+
+        card.className = "activity";
+
+        card.style.animationDelay =
+            `${index * .15}s`;
+
+
+        card.innerHTML = `
+
+            <div class="activity-icon">
+                ${getIcon(activity.title,index)}
+            </div>
+
+            <h3>
+                ${cleanTitle(activity.title)}
+            </h3>
+
+            <p>
+                ${activity.description || ""}
+            </p>
+
+            <span class="duration">
+                ⏱ ${activity.duration || 10} min
+            </span>
+
+        `;
+
+
+        activityContainer.appendChild(card);
+
+    });
+
+}
+
+
+function cleanTitle(title){
+
+    return title
+        .replace("🎵","")
+        .replace("🏠","")
+        .replace("🧘","")
+        .trim();
+
+}
+
+
+function getIcon(title,index){
+
+    if(title.includes("Dance")) return "🎵";
+
+    if(title.includes("Indoor")) return "🏠";
+
+    if(title.includes("Stretch")) return "🧘";
+
+    return ["🎵","🏠","🧘"][index % 3];
+
+}
+
+
+renderMovies();
+renderActivities();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,478 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>MoodMate — How It Works</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#fffaf5;
+    color:#241914;
+    font-family:"DM Sans",sans-serif;
+}
+
+nav{
+    height:82px;
+    padding:0 8%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    font-family:"Playfair Display",serif;
+    font-size:28px;
+    font-weight:700;
+}
+
+.logo span{
+    color:#f47b20;
+}
+
+nav a{
+    color:#675b54;
+    text-decoration:none;
+    font-size:14px;
+}
+
+/* HERO */
+
+.hero{
+    min-height:620px;
+    padding:100px 8%;
+
+    display:flex;
+    align-items:center;
+
+    color:white;
+
+    background:
+    linear-gradient(
+        100deg,
+        rgba(28,17,12,.94),
+        rgba(28,17,12,.55)
+    ),
+    url("https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1800&q=85");
+
+    background-size:cover;
+    background-position:center;
+}
+
+.hero-content{
+    max-width:800px;
+}
+
+.label{
+    color:#ff954d;
+    font-size:12px;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    font-weight:bold;
+}
+
+h1{
+    margin-top:18px;
+    font-family:"Playfair Display",serif;
+    font-size:clamp(52px,7vw,92px);
+    line-height:.95;
+}
+
+h1 span{
+    color:#ff8b3d;
+}
+
+.hero p{
+    max-width:620px;
+    margin-top:28px;
+    color:#eee0d7;
+    line-height:1.8;
+    font-size:17px;
+}
+
+/* PIPELINE */
+
+.pipeline{
+    padding:110px 8%;
+}
+
+.pipeline-head{
+    max-width:700px;
+}
+
+.pipeline-head h2{
+    font-family:"Playfair Display",serif;
+    font-size:55px;
+    line-height:1;
+    margin-top:12px;
+}
+
+.pipeline-head p{
+    color:#766960;
+    margin-top:20px;
+    line-height:1.7;
+}
+
+.steps{
+    margin-top:65px;
+
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+}
+
+.step{
+    padding:32px;
+    background:white;
+    border:1px solid #eee2d9;
+    border-radius:26px;
+
+    transition:.35s;
+}
+
+.step:hover{
+    transform:translateY(-10px);
+    border-color:#f47b20;
+    box-shadow:0 25px 50px rgba(70,30,10,.1);
+}
+
+.number{
+    width:45px;
+    height:45px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#f47b20;
+    color:white;
+
+    border-radius:50%;
+
+    font-weight:bold;
+}
+
+.step h3{
+    margin-top:25px;
+    font-family:"Playfair Display",serif;
+    font-size:25px;
+}
+
+.step p{
+    margin-top:12px;
+    color:#766960;
+    font-size:14px;
+    line-height:1.7;
+}
+
+/* AI SECTION */
+
+.ai{
+    padding:110px 8%;
+    background:#211713;
+    color:white;
+}
+
+.ai-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:70px;
+    align-items:center;
+}
+
+.ai h2{
+    font-family:"Playfair Display",serif;
+    font-size:58px;
+    line-height:.98;
+}
+
+.ai h2 span{
+    color:#ff8b3d;
+}
+
+.ai p{
+    margin-top:25px;
+    color:#cbbdb5;
+    line-height:1.8;
+}
+
+.ai-card{
+    padding:40px;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:28px;
+    background:#2c1e18;
+}
+
+.ai-row{
+    display:flex;
+    justify-content:space-between;
+    padding:18px 0;
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.ai-row:last-child{
+    border:none;
+}
+
+.ai-row span:first-child{
+    color:#a99a91;
+}
+
+.ai-row span:last-child{
+    color:#ff954d;
+    font-weight:bold;
+}
+
+/* FOOTER */
+
+footer{
+    padding:40px 8%;
+    background:#18110e;
+    color:#8d817a;
+}
+
+footer strong{
+    color:white;
+}
+
+/* MOBILE */
+
+@media(max-width:850px){
+
+    .steps{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .ai-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .steps{
+        grid-template-columns:1fr;
+    }
+
+    .pipeline,
+    .ai{
+        padding:75px 7%;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+
+    <div class="logo">
+        Mood<span>Mate</span>
+    </div>
+
+    <a href="index.html">
+        ← Back to MoodMate
+    </a>
+
+</nav>
+
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="label">
+            More than a recommendation engine
+        </div>
+
+        <h1>
+            Your mood<br>
+            becomes your <span>moment.</span>
+        </h1>
+
+        <p>
+            MoodMate combines emotion understanding,
+            personalized movie recommendations and
+            activity recognition to help you choose
+            what to do next — instead of automatically
+            choosing another scroll.
+        </p>
+
+    </div>
+
+</section>
+
+
+<section class="pipeline">
+
+    <div class="pipeline-head">
+
+        <div class="label">
+            Behind the experience
+        </div>
+
+        <h2>
+            Four signals.<br>
+            One moment.
+        </h2>
+
+        <p>
+            You simply choose your current context.
+            MoodMate handles the intelligence behind the scenes.
+        </p>
+
+    </div>
+
+
+    <div class="steps">
+
+        <div class="step">
+
+            <div class="number">01</div>
+
+            <h3>Emotion</h3>
+
+            <p>
+                Your selected mood is interpreted
+                by the emotion intelligence layer
+                to understand the kind of experience
+                that may fit you.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="number">02</div>
+
+            <h3>Personalization</h3>
+
+            <p>
+                Your MovieLens-based preference
+                profile helps rank movies according
+                to your individual taste.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="number">03</div>
+
+            <h3>Context</h3>
+
+            <p>
+                Time, weather and estimated energy
+                influence the recommendations so
+                they fit the moment rather than
+                simply matching a genre.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="number">04</div>
+
+            <h3>Action</h3>
+
+            <p>
+                MoodMate can suggest an activity
+                designed to help you step away
+                from passive scrolling.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="ai">
+
+    <div class="ai-grid">
+
+        <div>
+
+            <div class="label">
+                The MoodMate engine
+            </div>
+
+            <h2>
+                AI that understands
+                the <span>moment.</span>
+            </h2>
+
+            <p>
+                Instead of producing one generic recommendation,
+                MoodMate combines multiple signals into a
+                contextual score and ranks the experiences
+                accordingly.
+            </p>
+
+        </div>
+
+
+        <div class="ai-card">
+
+            <div class="ai-row">
+                <span>Personal preference</span>
+                <span>MovieLens AI</span>
+            </div>
+
+            <div class="ai-row">
+                <span>Mood understanding</span>
+                <span>Emotion Model</span>
+            </div>
+
+            <div class="ai-row">
+                <span>Physical activity</span>
+                <span>UCI HAR</span>
+            </div>
+
+            <div class="ai-row">
+                <span>Context</span>
+                <span>Mood + Time + Weather</span>
+            </div>
+
+            <div class="ai-row">
+                <span>Final output</span>
+                <span>MoodMate Match</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer>
+
+    <strong>MoodMate</strong>
+    — Break the Scroll
+
+</footer>
+
+</body>
+</html>
