@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width,initial-scale=1.0">
+
+<title>MoodMate — Mood Journal</title>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap"
+      rel="stylesheet">
+
+<link rel="stylesheet"
+      href="style.css">
+
+</head>
+
+<body>
+
+
+<nav class="nav">
+
+<a class="logo"
+   href="index.html">
+
+Mood<span>Mate</span>
+
+</a>
+
+<div class="navlinks">
+
+<a href="index.html">Home</a>
+
+<a href="discover.html">Discover</a>
+
+<a href="moment.html">Your Moment</a>
+
+<a href="recommendations.html">
+Recommendations
+</a>
+
+<a href="journal.html">Journal</a>
+
+</div>
+
+</nav>
+
+
+<section class="section page">
+
+<div class="container">
+
+
+<div class="center">
+
+<div class="kicker">
+Step 4 · Mood Journal
+</div>
+
+<h1 class="title">
+
+Keep a little<br>
+record of your moments.
+
+</h1>
+
+<p class="subtitle">
+
+Reflection turns a recommendation
+into something personal. Save what
+you felt and what you chose.
+
+</p>
+
+</div>
+
+
+<div class="panel">
+
+
+<div class="controls"
+     style="margin-top:0">
+
+<h2>
+How did this moment feel?
+</h2>
+
+
+<div class="controls-grid">
+
+
+<div>
+
+<label>Mood</label>
+
+<input
+id="journalMood"
+placeholder="e.g. calm, happy">
+
+</div>
+
+
+<div>
+
+<label>
+What did you choose?
+</label>
+
+<input
+id="choice"
+placeholder="Movie / activity">
+
+</div>
+
+
+<div style="grid-column:span 2">
+
+<label>
+Reflection
+</label>
+
+<textarea
+id="reflection"
+placeholder="Write a few lines about this moment...">
+</textarea>
+
+</div>
+
+
+</div>
+
+
+<button
+class="btn"
+id="save">
+
+Save this reflection
+
+</button>
+
+</div>
+
+</div>
+
+
+<div style="margin-top:60px">
+
+<div class="kicker">
+Your reflections
+</div>
+
+<h2
+style="font-size:45px;margin-top:10px">
+
+Moments you've saved.
+
+</h2>
+
+
+<div
+class="journal-list"
+id="entries">
+
+</div>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<footer class="footer">
+
+<div>
+<strong>MoodMate</strong>
+— Break the Scroll
+</div>
+
+<div>
+AI-powered mood experiences
+</div>
+
+</footer>
+
+
+<script>
+
+const STORAGE_KEY =
+"moodmate_journal";
+
+
+let entries =
+JSON.parse(
+localStorage.getItem(
+STORAGE_KEY
+) || "[]"
+);
+
+
+const context =
+JSON.parse(
+localStorage.getItem(
+"moodmate_context"
+) || "null"
+);
+
+
+if(context){
+
+document.getElementById(
+"journalMood"
+).value =
+context.mood || "";
+
+}
+
+
+/* RENDER JOURNAL */
+
+function renderEntries(){
+
+const container =
+document.getElementById(
+"entries"
+);
+
+
+if(entries.length === 0){
+
+container.innerHTML = `
+
+<div class="empty">
+
+No reflections yet.
+
+Create a moment and save
+your first reflection.
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+container.innerHTML =
+entries.map(
+entry => `
+
+<div class="entry">
+
+<div class="entry-date">
+
+${entry.date}
+
+</div>
+
+<h3>
+
+${entry.mood ||
+"My moment"}
+
+</h3>
+
+<p>
+
+<strong>Choice:</strong>
+${entry.choice || "—"}
+
+</p>
+
+<p>
+
+${entry.reflection || ""}
+
+</p>
+
+</div>
+
+`
+).join("");
+
+}
+
+
+/* SAVE */
+
+document
+.getElementById("save")
+.addEventListener(
+"click",
+() => {
+
+const entry = {
+
+date:
+new Date().toLocaleString(),
+
+mood:
+document.getElementById(
+"journalMood"
+).value ||
+"My moment",
+
+choice:
+document.getElementById(
+"choice"
+).value,
+
+reflection:
+document.getElementById(
+"reflection"
+).value
+
+};
+
+
+entries.unshift(
+entry
+);
+
+
+localStorage.setItem(
+STORAGE_KEY,
+JSON.stringify(entries)
+);
+
+
+document.getElementById(
+"choice"
+).value = "";
+
+document.getElementById(
+"reflection"
+).value = "";
+
+
+renderEntries();
+
+});
+
+
+renderEntries();
+
+</script>
+
+</body>
+</html>
