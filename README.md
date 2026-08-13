@@ -1,4 +1,4 @@
-# 🎬 MoodMate AI — Project Summary
+# 🎬 MoodM***ate AI — Project Summary
 
 MoodMate AI is an **AI-powered, context-aware recommendation system** designed to help users decide what to watch or what to do based on their current **mood, time, weather, and energy level**.
 
@@ -28,6 +28,7 @@ The system then generates personalized recommendations for:
 - 🎬 Movies
 - 🚶 Activities
 - 🧘 Relaxation / movement suggestions
+- 
 # 🧠 MoodMate AI Recommendation Pipeline
 
 Traditional recommendation systems mainly depend on historical user preferences:
@@ -40,8 +41,8 @@ Movie Recommendation
 
 MoodMate adds the user's current context:
 
-```text
-CURRENT CONTEXT
+
+#**CURRENT CONTEXT**
       │
       ├──────────────┬──────────────┐
       │              │              │
@@ -67,12 +68,12 @@ CURRENT CONTEXT
                      ▼
               MOODMATE RESULTS
 
-### Markdown 2 — Datasets & Technology
+###  Datasets & Technology
 
-```markdown
+
 # 📊 Datasets
 
-## MovieLens
+ MovieLens
 
 Used for movie recommendation and personalization.
 
@@ -81,7 +82,7 @@ Used for movie recommendation and personalization.
 - 6,040 users
 - 18 genres
 
-## Emotion Dataset
+ Emotion Dataset
 
 Used for emotion classification.
 
@@ -89,7 +90,7 @@ Used for emotion classification.
 - TF-IDF features
 - 6 emotion classes
 
-## UCI Human Activity Recognition
+UCI Human Activity Recognition
 
 Used for activity recognition.
 
