@@ -1,75 +1,152 @@
-# 🎬 MoodMate AI
+# 🎬 MoodMate AI — Project Summary
 
-### Break the Scroll. Find Your Moment.
+MoodMate AI is an **AI-powered, context-aware recommendation system** designed to help users decide what to watch or what to do based on their current **mood, time, weather, and energy level**.
 
-MoodMate AI is an AI-powered personalized recommendation system designed to help users move beyond endless scrolling.
+Instead of encouraging endless scrolling through content, MoodMate creates a personalized **"moment"** for the user.
 
-Instead of simply asking **"What do you want to watch?"**, MoodMate considers the user's:
-
-- 🧠 Mood
-- 🌙 Time of day
-- 🌧️ Weather
-- ⚡ Energy level
-- 🎬 Movie preferences
-
-It then creates a personalized moment with **movie recommendations and real-world activities**.
+> **Don't just scroll. Feel. 🧡**
 
 ---
 
-## ✨ What Makes MoodMate Different?
+## 🧠 What is MoodMate?
 
-Most recommendation systems focus only on what a user has watched before.
+MoodMate combines multiple Artificial Intelligence and Machine Learning components into one recommendation pipeline.
 
-MoodMate goes further by combining:
+The system considers:
 
-**Emotion + Context + Personal Preference + Activity**
+- 😊 User Mood
+- 🕐 Time of Day
+- 🌦️ Weather
+- ⚡ Energy Level
+- 👤 User Preferences
+- 🎬 Movie Genres
+- ⭐ Movie Ratings
+- 🚶 Human Activity Recognition
 
-to create recommendations that fit the user's current moment.
+The system then generates personalized recommendations for:
 
-For example:
-
-> 🌧️ Rainy evening + 😊 Joyful mood + ⚡ Medium energy
-
-MoodMate might suggest:
-
-🎬 A movie to watch  
-🎵 Dancing to favorite music  
-🧘 A short stretching session  
-🚶 A light movement break
-
-The goal isn't simply to recommend content.
-
-### The goal is to recommend a better moment.
+- 🎬 Movies
+- 🚶 Activities
+- 🧘 Relaxation / movement suggestions
 
 ---
 
-# 🧠 AI Pipeline
+# 🚀 Core Idea
 
-MoodMate combines multiple machine-learning components.
+Traditional recommendation systems mainly depend on historical user preferences:
 
 ```text
-                 USER CONTEXT
-                      │
-        ┌─────────────┼─────────────┐
-        │             │             │
-      Mood          Time         Weather
-        │             │             │
-        └─────────────┼─────────────┘
-                      │
-                   Energy
-                      │
-                      ▼
-              ┌───────────────┐
-              │   MOODMATE    │
-              │  AI ENGINE    │
-              └───────┬───────┘
-                      │
-          ┌───────────┴───────────┐
-          │                       │
-          ▼                       ▼
-   Movie Recommendation      Activity Recommendation
-          │                       │
-          └───────────┬───────────┘
-                      ▼
-                PERSONALIZED
-                   MOMENT
+User History
+     ↓
+
+Movie Preferences
+     ↓
+Movie Recommendation
+                 CURRENT CONTEXT
+                       │
+        ┌──────────────┼──────────────┐
+        │              │              │
+       Mood           Time         Weather
+        │              │              │
+        └──────────────┼──────────────┘
+                       │
+                     Energy
+                       │
+                       ▼
+              CONTEXT ANALYSIS
+                       │
+          ┌────────────┴────────────┐
+          │                         │
+          ▼                         ▼
+   MOVIE ENGINE               ACTIVITY ENGINE
+          │                         │
+          ▼                         ▼
+   PERSONALIZATION           ACTIVITY MODEL
+          │                         │
+          └────────────┬────────────┘
+                       │
+                       ▼
+               MOODMATE RESULTS
+Movie Recommendation
+
+The movie engine combines:
+
+User genre preferences
+Movie genres
+Movie ratings
+Mood compatibility
+Time compatibility
+Weather compatibility
+Energy compatibility
+
+Datasets
+MovieLens
+
+Used for movie recommendation and personalization.
+Used for emotion classification.
+UCI Human Activity Recognition
+
+Used for activity recognition.
+Technology Stack
+Programming
+Python
+JavaScript
+HTML5
+CSS3
+Machine Learning
+Scikit-learn
+Pandas
+NumPy
+NLP
+TF-IDF
+Emotion Classification
+Recommendation System
+MovieLens
+Genre-based recommendation
+User preference modeling
+Context-aware ranking
+Movie similarity
+Activity Intelligence
+UCI HAR
+Activity Classification
+Backend
+Flask
+REST API
+JSON
+Gunicorn
+Frontend
+HTML
+CSS
+JavaScript
+Responsive design
+Animations
+Cinematic UI
+Deployment
+GitHub
+Render
+MoodMate/
+│
+├── frontend/
+│   ├── index.html
+│   ├── results.html
+│   └── about.html
+│
+├── backend/
+│   ├── app.py
+│   ├── requirements.txt
+│   ├── README.md
+│   └── models/
+│       ├── activity_labels.pkl
+│       ├── activity_model.pkl
+│       ├── emotion_model.pkl
+│       ├── emotion_vectorizer.pkl
+│       ├── movie_genre_matrix.pkl
+│       ├── movies.pkl
+│       ├── ratings.pkl
+│       └── user_preference_matrix.pkl
+│
+└── README.md
+🎬 Don't Just Scroll.
+🧡 Feel the Moment.
+
+
