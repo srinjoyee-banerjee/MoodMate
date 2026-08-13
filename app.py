@@ -6,23 +6,10 @@ import pandas as pd
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
-# ============================================================
-
-# APP
-
-# ============================================================
-
 app = Flask(__name__)
 CORS(app)
 
-# ============================================================
-
-# PATHS
-
-# ============================================================
-
-BASE_DIR = os.path.dirname(os.path.abspath(**file**))
-
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # ============================================================
 
 # LOAD MOODMATE AI COMPONENTS
